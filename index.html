@@ -370,6 +370,83 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   #q-module .category-grid{grid-template-columns:1fr !important}
 }
 </style>
+
+<style id="qa-design-v2-fixes">
+/* Main program tabs: selected tool gets its own cool accent, unselected stays beige. */
+.random-tab.active{
+  background:#557985 !important;
+  border-color:#557985 !important;
+  color:#fffdf8 !important;
+}
+.random-tab.active:hover{background:#496c77 !important;border-color:#496c77 !important}
+
+/* Give Q&A's local tabs breathing room below the RANDOM title bar on desktop. */
+#q-module .topbar{
+  margin-top:20px !important;
+  margin-bottom:16px !important;
+}
+
+/* Question management form: deliberate spacing and a wide, shallow question field. */
+#q-module .form-grid{
+  gap:18px !important;
+}
+#q-module .form-grid > div{
+  min-width:0;
+}
+#q-module .form-grid label{
+  display:block !important;
+  margin:0 0 8px !important;
+  line-height:1.25 !important;
+  color:#62584f !important;
+}
+#q-module #qCat{
+  display:block !important;
+  width:min(100%,320px) !important;
+  min-height:42px !important;
+  padding:9px 11px !important;
+}
+#q-module #qText{
+  display:block !important;
+  width:100% !important;
+  min-height:86px !important;
+  height:86px !important;
+  padding:11px 12px !important;
+  line-height:1.55 !important;
+  resize:vertical !important;
+}
+#q-module #addQ{
+  justify-self:start !important;
+  margin-top:0 !important;
+}
+#q-module .panel-title{
+  margin-bottom:18px !important;
+}
+
+/* Category management also needs separation between heading, input and list. */
+#q-module .form-row{
+  gap:10px !important;
+  margin-top:2px !important;
+}
+#q-module .form-row input{
+  min-height:42px !important;
+  padding:9px 11px !important;
+}
+#q-module .panel .list{
+  margin-top:16px;
+}
+
+@media(max-width:700px){
+  #q-module .topbar{
+    margin-top:10px !important;
+    margin-bottom:11px !important;
+  }
+  #q-module #qCat{width:100% !important}
+  #q-module #qText{
+    min-height:96px !important;
+    height:96px !important;
+  }
+}
+</style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
@@ -1283,7 +1360,9 @@ function updateNav(){
   if(mobileCount) mobileCount.textContent=favorites.size?`(${favorites.size})`:"";
 }
 function setView(v){
-  currentView=v;updateNav();
+  currentView=v;
+  if(v==="random") questionMode="normal";
+  updateNav();
   if(v==="random") renderRandom();
   if(v==="favorites") renderFavorites();
   if(v==="manage") renderManage();
@@ -1427,7 +1506,10 @@ function renderFavorites(){
   if(clear) clear.onclick=()=>{
     if(!confirm(`즐겨찾기 ${favorites.size}개를 모두 삭제할까요?`)) return;
     favorites.clear();
-    if(questionMode==="favorites") currentQuestionId=null;
+    if(questionMode==="favorites"){
+      questionMode="normal";
+      currentQuestionId=null;
+    }
     q_save();updateNav();toast("즐겨찾기를 모두 삭제했어요.");renderFavorites();
   };
 
