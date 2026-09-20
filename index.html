@@ -266,15 +266,109 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   <link rel="manifest" href="/random/random-manifest-v2.webmanifest">
   <meta name="theme-color" content="#eee6d8">
 
-<style id="pwa-install-debug-style">
-#pwaInstallNow{
- position:fixed;right:14px;bottom:14px;z-index:2147483647;
- border:1px solid #bda98e;border-radius:12px;background:#fff8ec;color:#3b3027;
- padding:11px 15px;font:800 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
- box-shadow:0 5px 18px rgba(58,43,28,.16);cursor:pointer
+
+<style id="qa-design-v1">
+/* Q&A — RANDOM unified compact layout */
+#q-module{
+  --q-bg:#eee6d8; --q-panel:#f8f1e6; --q-panel2:#fffaf2; --q-line:#d8c9b4;
+  --q-ink:#302a25; --q-muted:#776c61; --q-hover:#eadcc8;
+  background:transparent !important; color:var(--q-ink);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif !important;
 }
-#pwaInstallNow.ready{background:#ead9bf;border-color:#9f8264}
-#pwaInstallNow:disabled{opacity:.65;cursor:default}
+#q-module .app{display:block !important;min-height:0 !important;background:transparent !important}
+#q-module .sidebar{display:none !important}
+#q-module .main{width:100%;min-width:0}
+#q-module .topbar{
+  height:auto !important;min-height:0 !important;padding:0 !important;margin:0 auto 14px !important;
+  max-width:860px;display:flex !important;align-items:center !important;justify-content:flex-end !important;
+  border:0 !important;background:transparent !important;position:static !important;backdrop-filter:none !important;
+}
+#q-module .mobile-tabs{
+  display:flex !important;width:auto !important;gap:7px !important;align-items:center !important;
+  overflow:visible !important;margin-left:auto;
+}
+#q-module .mobile-tabs button{
+  border:1px solid var(--q-line) !important;background:var(--q-panel2) !important;color:var(--q-ink) !important;
+  padding:9px 13px !important;border-radius:11px !important;font-size:13px !important;font-weight:750 !important;
+  white-space:nowrap;box-shadow:none !important;
+}
+#q-module .mobile-tabs button:hover{background:var(--q-hover) !important;border-color:#c7b394 !important}
+#q-module .mobile-tabs button.active{
+  background:var(--q-ink) !important;border-color:var(--q-ink) !important;color:#fffaf2 !important;
+}
+#q-module .view{max-width:860px !important;margin:0 auto !important;padding:0 0 44px !important}
+#q-module .hero,#q-module .eyebrow{display:none !important}
+#q-module h1{font-family:inherit !important;font-size:24px !important;letter-spacing:-.4px !important}
+#q-module .intro{font-size:13px !important;color:var(--q-muted) !important}
+#q-module .question-card{
+  width:100% !important;height:auto !important;min-height:300px !important;padding:26px 28px 22px !important;
+  background:var(--q-panel2) !important;border:1px solid var(--q-line) !important;border-radius:16px !important;
+  box-shadow:none !important;overflow:hidden !important;
+}
+#q-module .question-card:before{display:none !important}
+#q-module .card-inner{min-height:250px !important}
+#q-module .question-area{padding:4px 0 12px !important}
+#q-module .category-pill{
+  background:#efe3d2 !important;color:#695847 !important;border:0 !important;border-radius:999px !important;
+  padding:6px 10px !important;font-size:12px !important;font-weight:800 !important;
+}
+#q-module .question{
+  font-family:inherit !important;font-size:23px !important;line-height:1.55 !important;letter-spacing:-.35px !important;
+  font-weight:650 !important;margin:18px 0 22px !important;color:var(--q-ink) !important;word-break:keep-all;
+}
+#q-module .card-actions{margin-top:8px !important}
+#q-module .heart{
+  width:42px !important;height:42px !important;border-radius:11px !important;
+  border:1px solid var(--q-line) !important;background:var(--q-panel2) !important;
+}
+#q-module .primary,#q-module .secondary,#q-module .danger{
+  border-radius:11px !important;padding:10px 14px !important;font-size:13px !important;font-weight:800 !important;
+  box-shadow:none !important;transform:none !important;
+}
+#q-module .primary{background:var(--q-ink) !important;color:#fffaf2 !important;border:1px solid var(--q-ink) !important}
+#q-module .secondary{background:var(--q-panel2) !important;color:var(--q-ink) !important;border:1px solid var(--q-line) !important}
+#q-module .toolbar{display:flex !important;gap:7px !important;flex-wrap:wrap !important;margin:12px 0 8px !important;overflow:visible !important}
+#q-module .chip{
+  border:1px solid var(--q-line) !important;background:var(--q-panel2) !important;color:var(--q-ink) !important;
+  padding:8px 11px !important;border-radius:10px !important;font-size:12px !important;font-weight:750 !important;
+}
+#q-module .chip:hover{background:var(--q-hover) !important;border-color:#c7b394 !important}
+#q-module .chip.active{background:var(--q-ink) !important;border-color:var(--q-ink) !important;color:#fffaf2 !important}
+#q-module .range-info{margin:5px 2px 0 !important;font-size:11px !important;color:var(--q-muted) !important}
+#q-module .panel{
+  background:var(--q-panel2) !important;border:1px solid var(--q-line) !important;border-radius:15px !important;
+  padding:18px !important;box-shadow:none !important;
+}
+#q-module .panel-title{font-size:15px !important;margin-bottom:12px !important}
+#q-module .list{gap:8px !important}
+#q-module .item{
+  background:var(--q-panel2) !important;border:1px solid var(--q-line) !important;border-radius:13px !important;
+  padding:13px !important;
+}
+#q-module .item-text{font-size:14px !important;line-height:1.55 !important}
+#q-module .item-cat{font-size:11px !important;color:#78624e !important}
+#q-module .icon-btn{
+  border:1px solid var(--q-line) !important;background:#fbf5eb !important;border-radius:9px !important;
+  color:var(--q-muted) !important;font-size:12px !important;
+}
+#q-module select,#q-module input,#q-module textarea{
+  border:1px solid var(--q-line) !important;background:#fffaf2 !important;border-radius:10px !important;
+  color:var(--q-ink) !important;
+}
+#q-module .category-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:9px !important}
+#q-module .cat-card{border:1px solid var(--q-line) !important;background:var(--q-panel2) !important;border-radius:13px !important}
+@media(max-width:700px){
+  #q-module .topbar{margin-bottom:10px !important}
+  #q-module .mobile-tabs{width:100% !important;gap:5px !important}
+  #q-module .mobile-tabs button{flex:1 1 0 !important;padding:9px 7px !important;font-size:12px !important}
+  #q-module .view{padding:0 0 32px !important}
+  #q-module .question-card{min-height:270px !important;padding:20px 18px 17px !important;border-radius:14px !important}
+  #q-module .card-inner{min-height:230px !important}
+  #q-module .question{font-size:20px !important;line-height:1.55 !important;margin:15px 0 18px !important}
+  #q-module .toolbar{flex-wrap:nowrap !important;overflow-x:auto !important;padding-bottom:3px !important}
+  #q-module .chip{flex:0 0 auto !important}
+  #q-module .category-grid{grid-template-columns:1fr !important}
+}
 </style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
@@ -290,7 +384,7 @@ body:not(.concept-active) .concept-nav-actions{display:none}
       <button class="btn concept-utility" onclick="openSaved()">즐겨찾기</button>
       <button class="btn concept-utility" onclick="openSettings()">설정</button>
       <span class="concept-action-gap"></span>
-      <button class="btn primary" onclick="generate()">세 조합</button>
+      <button class="btn primary" onclick="generate()">새 조합</button>
     </div>
   </div>
   <section id="c-results" class="empty"></section>
@@ -308,7 +402,7 @@ body:not(.concept-active) .concept-nav-actions{display:none}
       <div class="brand-sub">질문 생성기<br></div>
     </div>
     <nav class="nav">
-      <button data-view="random" class="active">❓ 질문</button>
+      <button data-view="random" class="active">질문</button>
       <button data-view="favorites">♡ 즐겨찾기 <span id="q-favCountNav"></span></button>
       <button data-view="manage">🛠 질문 관리</button>
     </nav>
@@ -318,10 +412,9 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   <main class="main">
     <header class="topbar">
       <nav class="mobile-tabs" aria-label="모바일 메뉴">
-        <span class="mobile-brand">Q&A</span>
-        <button data-mobile-view="random" class="active">❓ 질문</button>
-        <button data-mobile-view="favorites">♡ 저장 <span id="q-favCountMobile"></span></button>
-        <button data-mobile-view="manage">⚙ 관리</button>
+        <button data-mobile-view="random" class="active">질문</button>
+        <button data-mobile-view="favorites">즐겨찾기 <span id="q-favCountMobile"></span></button>
+        <button data-mobile-view="manage">질문 관리</button>
       </nav>
     </header>
     <section class="view" id="q-view"></section>
@@ -1252,11 +1345,6 @@ function renderRandom(){
       : `${[...selectedCategories].map(catName).join(" + ")} · ${pool.length}개 질문`;
 
   document.getElementById("q-view").innerHTML=`
-    <div class="hero">
-      <div class="eyebrow">${questionMode==="favorites" ? "Favorites Mode" : "Question"}</div>
-      <h1>${questionMode==="favorites" ? "즐겨찾기 질문" : "질문"}</h1>
-      <p class="intro">${questionMode==="favorites" ? "저장한 질문 안에서만 계속 뽑습니다." : "원하는 카테고리를 하나 이상 선택해 질문을 뽑아보세요."}</p>
-    </div>
     <div class="question-card">
       <div class="card-inner">
         <div class="question-area">
@@ -1302,7 +1390,6 @@ function toggleFavorite(id){
 }
 function renderCategories(){
   document.getElementById("q-view").innerHTML=`
-    <div class="hero"><div class="eyebrow">Categories</div><h1>카테고리</h1><p class="intro">카테고리 질문 뽑기</p></div>
     <div class="category-grid">
       ${categories.map(c=>{
         const count=questions.filter(q=>q.categoryId===c.id).length;
@@ -1315,7 +1402,6 @@ function renderCategories(){
 function renderFavorites(){
   const list=questions.filter(q=>favorites.has(q.id));
   document.getElementById("q-view").innerHTML=`
-    <div class="hero"><div class="eyebrow">Favorites</div><h1>즐겨찾기</h1><p class="intro">저장해 둔 질문을 모아보고, 저장한 질문 안에서만 뽑을 수 있어요.</p></div>
     <div class="toolbar">
       <button class="primary" id="favRoulette">♥ 즐겨찾기에서 질문 뽑기</button>
       ${list.length?`<button class="danger" id="clearFavorites">즐겨찾기 전체 삭제</button>`:""}
@@ -1350,7 +1436,6 @@ function renderFavorites(){
 
 function renderManage(){
   document.getElementById("q-view").innerHTML=`
-    <div class="hero"><div class="eyebrow">Database</div><h1>질문 관리</h1><p class="intro">질문과 카테고리는 여기서 자유롭게 추가하고 고칠 수 있어요.</p></div>
     <div class="panel">
       <div class="panel-title">새 질문 추가</div>
       <div class="form-grid">
@@ -1377,7 +1462,7 @@ function renderManage(){
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="panel-title">데이터 백업</div>
-      <p class="intro" style="margin-bottom:14px">수정·추가한 질문, 카테고리, 즐겨찾기를 JSON 파일 하나로 다른 기기에 옮길 수 있어요.</p>
+      
       <div class="toolbar" style="margin:0">
         <button class="primary" id="q_exportBackup">↓ 백업 내보내기</button>
         <button class="secondary" id="importBackupBtn">↑ 백업 가져오기</button>
@@ -1848,69 +1933,14 @@ s_render();
 <script>
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register(new URL('./sw.js', location.href).pathname).catch(()=>{}));
 </script>
-<button id="pwaInstallNow" type="button" aria-label="RANDOM 앱 설치">앱 설치 확인 중…</button>
 
-<script id="pwa-install-debug">
-(function(){
-  var promptEvent=null;
-  var btn=document.getElementById('pwaInstallNow');
-  if(!btn) return;
-
-  function standalone(){
-    return window.matchMedia('(display-mode: standalone)').matches ||
-           window.navigator.standalone === true;
-  }
-  function setWaiting(){
-    if(standalone()){
-      btn.textContent='설치 완료';
-      btn.disabled=true;
-    }else{
-      btn.textContent='앱 설치';
-      btn.disabled=false;
-    }
-  }
-
-  setWaiting();
-
-  window.addEventListener('beforeinstallprompt',function(e){
-    e.preventDefault();
-    promptEvent=e;
-    btn.textContent='앱 설치';
-    btn.classList.add('ready');
-    btn.disabled=false;
-  });
-
-  btn.addEventListener('click',async function(){
-    if(standalone()) return;
-    if(!promptEvent){
-      alert('현재 PC Edge가 RANDOM의 설치 이벤트를 보내지 않고 있습니다. 이 메시지가 보이면 새 index.html은 정상 반영된 것입니다.');
-      return;
-    }
-    try{
-      promptEvent.prompt();
-      await promptEvent.userChoice;
-    }catch(err){
-      alert('설치창을 열지 못했습니다: '+(err && err.message ? err.message : err));
-    }finally{
-      promptEvent=null;
-      btn.classList.remove('ready');
-      setWaiting();
-    }
-  });
-
-  window.addEventListener('appinstalled',function(){
-    promptEvent=null;
-    btn.textContent='설치 완료';
-    btn.disabled=true;
-  });
-
-  if('serviceWorker' in navigator){
-    window.addEventListener('load',function(){
-      navigator.serviceWorker.register('/random/sw.js',{scope:'/random/'}).catch(function(err){
-        console.error('RANDOM service worker registration failed',err);
-      });
+<script id="random-sw-register">
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/random/sw.js', {scope:'/random/'}).catch(function (err) {
+      console.error('RANDOM service worker registration failed', err);
     });
-  }
-})();
+  });
+}
 </script>
 </body></html>
