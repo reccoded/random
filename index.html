@@ -263,8 +263,22 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   #c-module .toolbar .concept-utility{padding:9px 8px;font-size:12px}
 }
 </style>
+
+<style id="temporary-install-button-style">
+.random-install-btn{
+  margin-left:auto;margin-right:10px;padding:8px 12px;border:1px solid #d8c9b4;
+  border-radius:10px;background:#fffaf1;color:#3b3027;font-weight:800;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .12s ease
+}
+.random-install-btn:hover{background:#efe1cd;border-color:#b69a80}
+.random-install-btn:active{transform:translateY(1px)}
+@media(max-width:800px){
+  .random-install-btn{margin-left:0;margin-right:6px;padding:7px 9px;font-size:12px}
+}
+</style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
+<button id="randomInstallBtn" type="button" class="random-install-btn" hidden>앱 설치</button>
 <div class="random-tabs">
 <button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button>
 </div></div></nav>
@@ -1834,5 +1848,46 @@ s_render();
 })();</script>
 <script>
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register(new URL('./sw.js', location.href).pathname).catch(()=>{}));
+</script>
+
+<script id="temporary-pwa-install">
+(function(){
+  let deferredInstallPrompt=null;
+  const btn=document.getElementById('randomInstallBtn');
+  if(!btn) return;
+
+  function installed(){
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true;
+  }
+  if(installed()) btn.hidden=true;
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredInstallPrompt=e;
+    if(!installed()) btn.hidden=false;
+  });
+
+  btn.addEventListener('click', async function(){
+    if(!deferredInstallPrompt){
+      alert('Edge가 아직 RANDOM을 설치 가능한 앱으로 판정하지 않았습니다. 잠시 후 새로고침한 뒤 다시 눌러 주세요.');
+      return;
+    }
+    btn.disabled=true;
+    try{
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+    } finally {
+      deferredInstallPrompt=null;
+      btn.hidden=true;
+      btn.disabled=false;
+    }
+  });
+
+  window.addEventListener('appinstalled', function(){
+    deferredInstallPrompt=null;
+    btn.hidden=true;
+  });
+})();
 </script>
 </body></html>
