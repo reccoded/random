@@ -241,12 +241,30 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   #c-module .c-results>.selectionbar{grid-column:auto!important;width:auto}
 }
 </style>
+
+<style id="concept-toolbar-fix3">
+#c-module .toolbar .concept-toolbar-actions{
+  display:flex;align-items:center;gap:7px;flex-wrap:nowrap;margin-left:auto
+}
+#c-module .toolbar .concept-action-gap{width:5px;flex:0 0 5px}
+#c-module .toolbar .concept-utility{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+}
+#c-module .toolbar .concept-utility:hover{
+  background:var(--panel3);
+  border-color:var(--line);
+  color:var(--text);
+}
+@media(max-width:800px){
+  #c-module .toolbar .concept-toolbar-actions{gap:5px}
+  #c-module .toolbar .concept-action-gap{width:2px;flex-basis:2px}
+  #c-module .toolbar .concept-utility{padding:9px 8px;font-size:12px}
+}
+</style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
-<div class="concept-nav-actions">
-  <button class="concept-nav-btn" onclick="openSaved()">즐겨찾기</button>
-  <button class="concept-nav-btn" onclick="openSettings()">설정</button>
-</div>
 <div class="random-tabs">
 <button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button>
 </div></div></nav>
@@ -255,7 +273,12 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 <main class="hero">
 <div class="toolbar">
     <h2 id="c-resultTitle">조합</h2>
-    <div class="actions"><button class="btn primary" onclick="generate()">🎲 새 조합</button></div>
+    <div class="actions concept-toolbar-actions">
+      <button class="btn concept-utility" onclick="openSaved()">즐겨찾기</button>
+      <button class="btn concept-utility" onclick="openSettings()">설정</button>
+      <span class="concept-action-gap"></span>
+      <button class="btn primary" onclick="generate()">세 조합</button>
+    </div>
   </div>
   <section id="c-results" class="empty"></section>
   <div id="c-feedback" class="feedback hidden"></div>
@@ -1810,19 +1833,6 @@ s_$("s-modalBody").addEventListener("click",e=>{
 s_render();
 })();</script>
 <script>
-if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script>
-<script id="concept-nav-visibility">
-(function(){
-  function syncConceptNav(){
-    var active=document.querySelector(".random-tab.active");
-    document.body.classList.toggle("concept-active",!!active&&active.dataset.tool==="c");
-  }
-  document.addEventListener("click",function(e){
-    if(e.target.closest&&e.target.closest(".random-tab"))setTimeout(syncConceptNav,0);
-  });
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",syncConceptNav);
-  else syncConceptNav();
-})();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register(new URL('./sw.js', location.href).pathname).catch(()=>{}));
 </script>
 </body></html>
