@@ -1359,10 +1359,8 @@ document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>setView(b.data
 document.querySelectorAll("[data-mobile-view]").forEach(b=>b.onclick=()=>setView(b.dataset.mobileView));
 setView("random");
 </script>
-<script>
-(function(){
+<script>(function(){
 "use strict";
-
 const KEY="select_picker_v5";
 const s_$=id=>document.getElementById(id);
 const uid=()=>Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,10);
@@ -1633,7 +1631,7 @@ function s_exportBackup(){
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
   const stamp=new Date().toISOString().slice(0,10).replaceAll("-","");
-  a.href=url;a.download="SELECT_"+stamp+".json";
+  a.href=url;a.download="Select_presets_"+stamp+".json";
   document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
   s_$("s-status").textContent="프리셋 백업 파일을 만들었습니다.";
 }
@@ -1642,29 +1640,42 @@ function importBackupFile(file){
   if(!file)return;
   const reader=new FileReader();
   reader.onload=()=>{
+    let data;
     try{
-      const data=JSON.parse(reader.result);
-      const p=data && data.presets;
-      if(!p || !Array.isArray(p.sets) || !p.sets.length) throw new Error("invalid");
-      const cleanSets=p.sets.map(s=>({
-        id:String(s.id||uid()),
-        name:String(s.name||"이름 없는 세트"),
-        items:Array.isArray(s.items)?s.items.map(x=>String(x)):[],
-        removed:[]
+      data=JSON.parse(String(reader.result??"").replace(/^\uFEFF/,"").trim());
+    }catch(e){
+      alert("SELECT JSON 파일을 읽을 수 없습니다.");
+      s_$("s-importFile").value="";
+      return;
+    }
+    try{
+      const p=(data&&data.presets&&typeof data.presets==="object")?data.presets:data;
+      if(!p||!Array.isArray(p.sets)||!p.sets.length)throw new Error("invalid");
+      const cleanSets=p.sets.map(set=>({
+        id:String(set.id||uid()),
+        name:String(set.name||"이름 없는 세트"),
+        items:Array.isArray(set.items)?set.items.map(x=>String(x)):[],
+        removed:Array.isArray(set.removed)?set.removed.filter(Number.isInteger):[]
       }));
-      if(!confirm("현재 프리셋을 백업 파일의 내용으로 교체할까요?"))return;
+      if(!confirm("현재 프리셋을 백업 파일의 내용으로 교체할까요?")){
+        s_$("s-importFile").value=""; return;
+      }
       db.sets=cleanSets;
-      db.active=cleanSets.some(s=>s.id===p.active)?p.active:cleanSets[0].id;
+      db.active=cleanSets.some(set=>set.id===p.active)?p.active:cleanSets[0].id;
       mode=p.mode==="remove"?"remove":"random";
       s_save();resetResult();s_render();
       s_$("s-status").textContent="프리셋을 가져왔습니다.";
-    }catch(e){alert("올바른 Select 프리셋 백업 파일이 아닙니다.");}
+    }catch(e){
+      console.error("SELECT import error",e);
+      alert("SELECT 프리셋 데이터 형식을 확인할 수 없습니다.");
+    }
     s_$("s-importFile").value="";
   };
-  reader.readAsText(file);
+  reader.onerror=()=>alert("SELECT 파일을 읽는 중 오류가 발생했습니다.");
+  reader.readAsText(file,"utf-8");
 }
 
-s_$("s-s_exportBackup").onclick=s_exportBackup;
+s_$("s-exportBackup").onclick=s_exportBackup;
 s_$("s-importBackup").onclick=()=>s_$("s-importFile").click();
 s_$("s-importFile").onchange=e=>importBackupFile(e.target.files[0]);
 
@@ -1687,7 +1698,7 @@ s_$("s-resetRemoved").onclick=()=>{
 
 s_$("s-manageSets").onclick=openSets;
 s_$("s-newSet").onclick=newSet;
-s_$("s-s_closeModal").onclick=s_closeModal;
+s_$("s-closeModal").onclick=s_closeModal;
 s_$("s-modalBack").onclick=e=>{if(e.target===s_$("s-modalBack"))s_closeModal()};
 
 s_$("s-modalBody").addEventListener("click",e=>{
@@ -1728,8 +1739,7 @@ s_$("s-modalBody").addEventListener("click",e=>{
 });
 
 s_render();
-})();
-</script>
+})();</script>
 <script>
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
