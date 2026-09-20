@@ -213,8 +213,41 @@
   #c-module .feedback .btn{width:100%;padding:10px 7px;font-size:13px;border-radius:10px}
 }
 </style>
+
+<style id="random-concept-layout-fix2">
+/* PC: favorites/settings live directly to the left of the module tabs. */
+.concept-nav-actions{display:flex;gap:7px;margin-left:auto;margin-right:14px}
+.concept-nav-btn{
+  border:1px solid var(--line);background:var(--panel);color:var(--text);
+  border-radius:10px;padding:8px 11px;font-weight:750;white-space:nowrap;
+  transition:background .15s ease,border-color .15s ease,transform .12s ease
+}
+.concept-nav-btn:hover{background:var(--accent-soft);border-color:#b69a80}
+.concept-nav-btn:active{transform:translateY(1px)}
+body:not(.concept-active) .concept-nav-actions{display:none}
+
+/* The selection bar occupies ONE grid cell, just like one material card. */
+#c-module .c-results>.selectionbar{
+  grid-column:auto !important;
+  width:auto;
+  min-width:0;
+  margin-top:0;
+  align-self:stretch
+}
+
+/* Phone keeps the shell limited to the three module tabs. */
+@media(max-width:800px){
+  .concept-nav-actions{display:none!important}
+  #c-module .c-results>.selectionbar{grid-column:auto!important;width:auto}
+}
+</style>
 </head><body>
-<nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div><div class="random-tabs">
+<nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
+<div class="concept-nav-actions">
+  <button class="concept-nav-btn" onclick="openSaved()">즐겨찾기</button>
+  <button class="concept-nav-btn" onclick="openSettings()">설정</button>
+</div>
+<div class="random-tabs">
 <button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button>
 </div></div></nav>
 <section id="c-module" class="random-module active">
@@ -1778,4 +1811,18 @@ s_render();
 })();</script>
 <script>
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script></body></html>
+</script>
+<script id="concept-nav-visibility">
+(function(){
+  function syncConceptNav(){
+    var active=document.querySelector(".random-tab.active");
+    document.body.classList.toggle("concept-active",!!active&&active.dataset.tool==="c");
+  }
+  document.addEventListener("click",function(e){
+    if(e.target.closest&&e.target.closest(".random-tab"))setTimeout(syncConceptNav,0);
+  });
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",syncConceptNav);
+  else syncConceptNav();
+})();
+</script>
+</body></html>
