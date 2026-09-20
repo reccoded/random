@@ -2,7 +2,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>RANDOM</title><meta name="theme-color" content="#eee6d8">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="RANDOM">
-<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-192.png">
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#eee6d8;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
 .random-nav{position:sticky;top:0;z-index:99999;background:#fffaf1;border-bottom:1px solid #d8c9b4;padding:max(7px,env(safe-area-inset-top)) 10px 7px}
@@ -263,22 +263,21 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   #c-module .toolbar .concept-utility{padding:9px 8px;font-size:12px}
 }
 </style>
+  <link rel="manifest" href="/random/manifest.webmanifest">
+  <meta name="theme-color" content="#eee6d8">
 
-<style id="temporary-install-button-style">
-.random-install-btn{
-  margin-left:auto;margin-right:10px;padding:8px 12px;border:1px solid #d8c9b4;
-  border-radius:10px;background:#fffaf1;color:#3b3027;font-weight:800;cursor:pointer;
-  transition:background .15s ease,border-color .15s ease,transform .12s ease
+<style id="pwa-install-debug-style">
+#pwaInstallNow{
+ position:fixed;right:14px;bottom:14px;z-index:2147483647;
+ border:1px solid #bda98e;border-radius:12px;background:#fff8ec;color:#3b3027;
+ padding:11px 15px;font:800 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+ box-shadow:0 5px 18px rgba(58,43,28,.16);cursor:pointer
 }
-.random-install-btn:hover{background:#efe1cd;border-color:#b69a80}
-.random-install-btn:active{transform:translateY(1px)}
-@media(max-width:800px){
-  .random-install-btn{margin-left:0;margin-right:6px;padding:7px 9px;font-size:12px}
-}
+#pwaInstallNow.ready{background:#ead9bf;border-color:#9f8264}
+#pwaInstallNow:disabled{opacity:.65;cursor:default}
 </style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
-<button id="randomInstallBtn" type="button" class="random-install-btn" hidden>앱 설치</button>
 <div class="random-tabs">
 <button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button>
 </div></div></nav>
@@ -1849,45 +1848,69 @@ s_render();
 <script>
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register(new URL('./sw.js', location.href).pathname).catch(()=>{}));
 </script>
+<button id="pwaInstallNow" type="button" aria-label="RANDOM 앱 설치">앱 설치 확인 중…</button>
 
-<script id="temporary-pwa-install">
+<script id="pwa-install-debug">
 (function(){
-  let deferredInstallPrompt=null;
-  const btn=document.getElementById('randomInstallBtn');
+  var promptEvent=null;
+  var btn=document.getElementById('pwaInstallNow');
   if(!btn) return;
 
-  function installed(){
+  function standalone(){
     return window.matchMedia('(display-mode: standalone)').matches ||
            window.navigator.standalone === true;
   }
-  if(installed()) btn.hidden=true;
-
-  window.addEventListener('beforeinstallprompt', function(e){
-    e.preventDefault();
-    deferredInstallPrompt=e;
-    if(!installed()) btn.hidden=false;
-  });
-
-  btn.addEventListener('click', async function(){
-    if(!deferredInstallPrompt){
-      alert('Edge가 아직 RANDOM을 설치 가능한 앱으로 판정하지 않았습니다. 잠시 후 새로고침한 뒤 다시 눌러 주세요.');
-      return;
-    }
-    btn.disabled=true;
-    try{
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-    } finally {
-      deferredInstallPrompt=null;
-      btn.hidden=true;
+  function setWaiting(){
+    if(standalone()){
+      btn.textContent='설치 완료';
+      btn.disabled=true;
+    }else{
+      btn.textContent='앱 설치';
       btn.disabled=false;
     }
+  }
+
+  setWaiting();
+
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();
+    promptEvent=e;
+    btn.textContent='앱 설치';
+    btn.classList.add('ready');
+    btn.disabled=false;
   });
 
-  window.addEventListener('appinstalled', function(){
-    deferredInstallPrompt=null;
-    btn.hidden=true;
+  btn.addEventListener('click',async function(){
+    if(standalone()) return;
+    if(!promptEvent){
+      alert('현재 PC Edge가 RANDOM의 설치 이벤트를 보내지 않고 있습니다. 이 메시지가 보이면 새 index.html은 정상 반영된 것입니다.');
+      return;
+    }
+    try{
+      promptEvent.prompt();
+      await promptEvent.userChoice;
+    }catch(err){
+      alert('설치창을 열지 못했습니다: '+(err && err.message ? err.message : err));
+    }finally{
+      promptEvent=null;
+      btn.classList.remove('ready');
+      setWaiting();
+    }
   });
+
+  window.addEventListener('appinstalled',function(){
+    promptEvent=null;
+    btn.textContent='설치 완료';
+    btn.disabled=true;
+  });
+
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',function(){
+      navigator.serviceWorker.register('/random/sw.js',{scope:'/random/'}).catch(function(err){
+        console.error('RANDOM service worker registration failed',err);
+      });
+    });
+  }
 })();
 </script>
 </body></html>
