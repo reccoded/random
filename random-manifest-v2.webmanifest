@@ -1,0 +1,33 @@
+{
+  "id": "/random/",
+  "name": "RANDOM",
+  "short_name": "RANDOM",
+  "description": "CONCEPT, Q&A, SELECT",
+  "lang": "ko-KR",
+  "start_url": "/random/",
+  "scope": "/random/",
+  "display": "standalone",
+  "background_color": "#eee6d8",
+  "theme_color": "#eee6d8",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/random/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/random/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/random/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
