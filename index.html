@@ -530,7 +530,15 @@ body:not(.concept-active) .concept-nav-actions{display:none}
  #l-module .log-entry{padding:11px 12px;border-radius:13px}
  #l-module .log-entry-actions{margin-left:0;width:100%;justify-content:flex-end}
  #l-module .log-btn{padding:9px 10px}
+ #l-module .log-ai{height:42px;align-self:end;padding:0 10px;gap:7px;margin-bottom:0}
+ #l-module .log-year-toggle{height:42px;min-height:42px;box-sizing:border-box;margin:0;padding:0 10px}
 }
+
+/* LOG control alignment fix: AI / 올해만 */
+#l-module .log-ai,
+#l-module .log-year-toggle{box-sizing:border-box;margin-bottom:0}
+#l-module .log-ai{align-self:end}
+#l-module .log-year-toggle{min-height:42px}
 </style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
