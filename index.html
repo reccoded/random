@@ -6,10 +6,10 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#eee6d8;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
 .random-nav{position:sticky;top:0;z-index:99999;background:#fffaf1;border-bottom:1px solid #d8c9b4;padding:max(7px,env(safe-area-inset-top)) 10px 7px}
-.random-row{max-width:1440px;margin:auto;display:flex;align-items:center;gap:12px}.random-brand{font-weight:950;color:#2b241d;white-space:nowrap}.random-tabs{margin-left:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(520px,100%)}
+.random-row{max-width:1440px;margin:auto;display:flex;align-items:center;gap:12px}.random-brand{font-weight:950;color:#2b241d;white-space:nowrap}.random-tabs{margin-left:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:min(600px,100%)}
 .random-tab{border:1px solid #d8c9b4;border-radius:10px;background:#f7efdf;color:#2b241d;padding:8px 11px;font:inherit;font-size:12px;font-weight:850}.random-tab.active{background:#6d4935;border-color:#6d4935;color:#fffaf2}
 .random-module{display:none}.random-module.active{display:block}
-@media(max-width:560px){.random-row{display:block}.random-brand{display:block;text-align:center;height:27px;font-size:13px}.random-tabs{width:100%;margin:3px 0 0;gap:5px}.random-tab{padding:7px 4px}}
+@media(max-width:560px){.random-row{display:block}.random-brand{display:block;text-align:center;height:27px;font-size:13px}.random-tabs{width:100%;margin:3px 0 0;gap:4px;grid-template-columns:repeat(4,minmax(0,1fr))}.random-tab{padding:7px 2px;font-size:11px;white-space:nowrap}}
 </style>
 <style>#c-module{
 #c-module --bg:#eee6d8;
@@ -454,16 +454,91 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 #s-module .app-title,
 #s-module header h1{display:none !important;}
 </style>
+
+<style id="random-log-v1">
+/* CONCEPT compact selection controls */
+#c-module .c-selection-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+#c-module .c-selection-top.hidden{display:none!important}
+#c-module .c-selection-top strong{color:var(--text);font-size:14px;min-width:34px}
+#c-module .c-selection-top button{border:1px solid var(--line);background:#fffdf8;color:var(--text);border-radius:9px;padding:7px 10px;font:inherit;cursor:pointer}
+#c-module .c-selection-top button:hover{background:var(--panel2)}
+/* SELECT primary action gets its own warm accent */
+#s-module #s-pickBtn{background:#e57a3f!important;border-color:#e57a3f!important;color:#fff!important;box-shadow:0 5px 16px rgba(120,65,30,.14)}
+#s-module #s-pickBtn:hover{background:#cf6833!important;border-color:#cf6833!important}
+#s-module #s-pickBtn:disabled{opacity:.55}
+/* LOG */
+#l-module{--lbg:#f5efe4;--lpanel:#fffaf2;--lline:#d9cebd;--ltext:#292824;--lmuted:#777064;--laccent:#557985;--ldanger:#a75249}
+#l-module .log-app{max-width:900px;margin:0 auto;padding:20px 18px 60px;color:var(--ltext)}
+#l-module .log-compose,#l-module .log-tools,#l-module .log-entry,#l-module .log-manage{background:var(--lpanel);border:1px solid var(--lline);border-radius:16px}
+#l-module .log-compose{padding:16px;margin-bottom:13px}
+#l-module .log-meta{display:grid;grid-template-columns:170px minmax(150px,1fr) auto;gap:9px;align-items:end;margin-bottom:10px}
+#l-module label{display:block;font-size:12px;font-weight:700;color:var(--lmuted);margin:0 0 5px}
+#l-module input[type=date],#l-module select,#l-module input[type=search],#l-module input[type=text],#l-module textarea{width:100%;box-sizing:border-box;border:1px solid var(--lline);border-radius:10px;background:#fffdf8;color:var(--ltext);font:inherit;padding:10px 11px;outline:none}
+#l-module input:focus,#l-module select:focus,#l-module textarea:focus{border-color:var(--laccent);box-shadow:0 0 0 2px rgba(85,121,133,.10)}
+#l-module textarea{min-height:96px;resize:vertical;line-height:1.55;font-size:16px}
+#l-module .log-ai{height:42px;display:flex;align-items:center;gap:7px;padding:0 10px;border:1px solid var(--lline);border-radius:10px;background:#fffdf8;white-space:nowrap;font-weight:700;font-size:14px}
+#l-module .log-ai input{width:18px;height:18px;accent-color:var(--laccent)}
+#l-module .log-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
+#l-module .log-btn{border:1px solid var(--lline);border-radius:10px;background:#fffdf8;color:var(--ltext);padding:9px 12px;font:inherit;font-weight:700;cursor:pointer}
+#l-module .log-btn.primary{background:var(--laccent);border-color:var(--laccent);color:white}
+#l-module #l-save{background:#6d4935;border-color:#6d4935;color:#fffaf2;min-width:92px}
+#l-module #l-save:hover{background:#583a2b;border-color:#583a2b}
+#l-module .log-year-toggle{display:flex;align-items:center;gap:7px;height:42px;padding:0 10px;border:1px solid var(--lline);border-radius:10px;background:#fffdf8;font-size:13px;font-weight:800;color:var(--ltext);white-space:nowrap}
+#l-module .log-year-toggle input{width:17px;height:17px;accent-color:var(--laccent)}
+#l-module .log-data{margin-top:18px;padding:14px;background:var(--lpanel);border:1px solid var(--lline);border-radius:16px}
+#l-module .log-data h3{margin:0 0 10px;font-size:14px;color:var(--lmuted)}
+#l-module .log-data-actions{display:flex;gap:7px;flex-wrap:wrap}
+#l-module .log-btn.danger{color:var(--ldanger)}
+#l-module .log-tools{padding:12px;margin-bottom:13px}
+#l-module .log-filter-row{display:grid;grid-template-columns:minmax(160px,1fr) 140px 120px 130px auto;gap:8px}
+#l-module .log-subtools{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+#l-module .log-list{display:grid;gap:9px}
+#l-module .log-entry{padding:13px 14px;cursor:pointer}
+#l-module .log-entry:hover{border-color:#b9ab96}
+#l-module .log-entry-head{display:flex;gap:7px;align-items:center;flex-wrap:wrap;color:var(--lmuted);font-size:12px;margin-bottom:6px}
+#l-module .log-cat{font-weight:800;color:var(--laccent)}
+#l-module .log-ai-mark{font-weight:800;color:#8b5a47}
+#l-module .log-text{white-space:pre-wrap;word-break:break-word;line-height:1.55;font-size:15px}
+#l-module .log-entry-actions{display:flex;gap:5px;margin-left:auto}
+#l-module .log-entry-actions button{border:0;background:transparent;color:var(--lmuted);padding:3px 5px;cursor:pointer;font-size:12px}
+#l-module .log-empty{text-align:center;color:var(--lmuted);padding:34px 12px}
+#l-module .log-manage{padding:14px;margin-top:12px;display:none}
+#l-module .log-manage.open{display:block}
+#l-module .log-manage h3{margin:0 0 10px;font-size:15px}
+#l-module .log-cat-list{display:grid;gap:7px;margin-bottom:10px}
+#l-module .log-cat-row{display:flex;gap:7px;align-items:center}
+#l-module .log-cat-row input{flex:1}
+#l-module .log-addcat{display:flex;gap:7px}
+#l-module .log-addcat input{flex:1}
+#l-module .log-status{min-height:18px;margin:7px 2px 0;color:var(--lmuted);font-size:12px}
+@media(max-width:700px){
+ #c-module .toolbar{align-items:center!important}
+ #c-module .c-selection-top{gap:5px}
+ #c-module .c-selection-top button{padding:6px 8px;font-size:12px}
+ #l-module .log-app{padding:11px 9px 45px}
+ #l-module .log-compose{padding:11px;border-radius:13px}
+ #l-module .log-meta{grid-template-columns:1fr 1fr;gap:7px}
+ #l-module .log-ai{height:40px;align-self:end}
+ #l-module textarea{min-height:88px}
+ #l-module .log-filter-row{grid-template-columns:1fr 1fr}
+ #l-module .log-filter-row input[type=search]{grid-column:1/-1}
+ #l-module .log-year-toggle{justify-content:center}
+ #l-module .log-tools{padding:9px;border-radius:13px}
+ #l-module .log-entry{padding:11px 12px;border-radius:13px}
+ #l-module .log-entry-actions{margin-left:0;width:100%;justify-content:flex-end}
+ #l-module .log-btn{padding:9px 10px}
+}
+</style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
-<button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button>
+<button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button><button class="random-tab" data-tool="l">LOG</button>
 </div></div></nav>
 <section id="c-module" class="random-module active">
 <div class="app">
 <main class="hero">
 <div class="toolbar">
-    <h2 id="c-resultTitle">조합</h2>
+    <div id="c-selectionTop" class="c-selection-top hidden"><strong id="c-selectionCount">0/0</strong><button type="button" onclick="selectAll()">전체 선택</button><button type="button" onclick="clearSelection()">전체 해제</button></div>
     <div class="actions concept-toolbar-actions">
       <button class="btn concept-utility" onclick="openSaved()">즐겨찾기</button>
       <button class="btn concept-utility" onclick="openSettings()">설정</button>
@@ -560,7 +635,7 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 <button class="btn" id="s-importBackup">⇧ 프리셋 가져오기</button>
 <input type="file" id="s-importFile" accept="application/json,.json" hidden>
 </div>
-<div class="backup-note">선택 세트와 항목, 선택 방식만 JSON 파일로 저장합니다. 다른 기기에서 가져오면 현재 프리셋을 백업 파일의 내용으로 교체합니다.</div>
+
 </section>
 </div>
 
@@ -572,6 +647,49 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 </div>
 
 
+</section>
+<section id="l-module" class="random-module">
+  <div class="log-app">
+    <section class="log-compose">
+      <div class="log-meta">
+        <div><label for="l-date">날짜</label><input id="l-date" type="date"></div>
+        <div><label for="l-category">분류</label><select id="l-category"></select></div>
+        <label class="log-ai"><input id="l-ai" type="checkbox"> AI</label>
+      </div>
+      <label for="l-text">내용</label>
+      <textarea id="l-text" placeholder="컨셉, 생각, 대사, 소재를 기록하세요."></textarea>
+      <div class="log-actions"><button class="log-btn" id="l-cancel" style="display:none">수정 취소</button><button class="log-btn primary" id="l-save">기록</button></div>
+      <div class="log-status" id="l-status"></div>
+    </section>
+
+    <section class="log-tools">
+      <div class="log-filter-row">
+        <input id="l-search" type="search" placeholder="기록 검색">
+        <select id="l-filterCat"><option value="">전체 분류</option></select>
+        <select id="l-filterAI"><option value="">전체 출처</option><option value="original">직접 작성</option><option value="ai">AI</option></select>
+        <select id="l-sort"><option value="new">최신순</option><option value="old">오래된순</option></select>
+        <label class="log-year-toggle"><input id="l-thisYear" type="checkbox" checked> 올해만</label>
+      </div>
+    </section>
+    <div class="log-list" id="l-list"></div>
+
+    <section class="log-data">
+      <h3>데이터 관리</h3>
+      <div class="log-data-actions">
+        <button class="log-btn" id="l-manageBtn">분류 관리</button>
+        <button class="log-btn" id="l-exportJson">JSON 백업</button>
+        <button class="log-btn" id="l-importJson">JSON 가져오기</button>
+        <input id="l-importFile" type="file" accept="application/json,.json" hidden>
+        <button class="log-btn" id="l-exportMd">MD 내보내기</button>
+        <button class="log-btn" id="l-exportCsv">CSV 내보내기</button>
+      </div>
+      <div class="log-manage" id="l-manage">
+        <h3>분류 관리</h3>
+        <div class="log-cat-list" id="l-catList"></div>
+        <div class="log-addcat"><input id="l-newCat" type="text" maxlength="30" placeholder="새 분류"><button class="log-btn" id="l-addCat">추가</button></div>
+      </div>
+    </section>
+  </div>
 </section>
 <script>
 document.querySelectorAll('.random-tab').forEach(b=>b.addEventListener('click',()=>{
@@ -829,6 +947,7 @@ function makeCore(){
  return out
 }
 function renderEmpty(){
+ const top=document.getElementById("c-selectionTop"); if(top)top.classList.add("hidden");
  const el=document.getElementById("c-results");el.className="empty";
  el.innerHTML=`<h2>조합</h2><p>새 조합을 눌러 시작하세요.</p>`;
  document.getElementById("c-feedback").classList.add("hidden")
@@ -846,8 +965,9 @@ function c_render(){
      ${on?"":`<div class="excludeMark">발전에서 제외</div>`}
    </div>`
  }).join("");
- el.innerHTML+=`<div class="selectionbar"><div class="count">발전 재료 ${selectedKeys.size} / ${keys.length} 선택</div>
-   <div class="mini"><button onclick="selectAll()">전체 선택</button><button onclick="clearSelection()">전체 해제</button></div></div>`;
+ const top=document.getElementById("c-selectionTop");
+ top.classList.remove("hidden");
+ document.getElementById("c-selectionCount").textContent=`${selectedKeys.size}/${keys.length}`;
  const fb=document.getElementById("c-feedback");fb.classList.remove("hidden");
  fb.innerHTML=`<button class="btn" onclick="saveCurrent()">즐겨찾기 추가</button><button class="btn primary" onclick="openPrompt()">발전시키기</button>`
 }
@@ -2031,5 +2151,59 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+</script>
+
+<script id="log-script-v1">
+(function(){
+"use strict";
+const ENTRY_KEY="random_log_entries_v1", CAT_KEY="random_log_categories_v1", SET_KEY="random_log_settings_v1";
+const $=id=>document.getElementById(id);
+const uid=()=>window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+const today=()=>{const d=new Date(), z=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`};
+const esc=x=>String(x??"").replace(/[&<>\"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;","'":"&#39;"}[m]));
+let categories, entries, settings, editing=null;
+try{categories=JSON.parse(localStorage.getItem(CAT_KEY)||"null")}catch(e){}
+if(!Array.isArray(categories)||!categories.length) categories=["컨셉","생각","대사","소재"].map(name=>({id:uid(),name}));
+try{entries=JSON.parse(localStorage.getItem(ENTRY_KEY)||"[]")}catch(e){entries=[]}
+if(!Array.isArray(entries))entries=[];
+try{settings=JSON.parse(localStorage.getItem(SET_KEY)||"{}")||{}}catch(e){settings={}}
+function saveAll(){localStorage.setItem(CAT_KEY,JSON.stringify(categories));localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));localStorage.setItem(SET_KEY,JSON.stringify(settings))}
+function catName(id){return categories.find(c=>c.id===id)?.name||"미분류"}
+function status(t){$("l-status").textContent=t||""; if(t)setTimeout(()=>{if($("l-status").textContent===t)$("l-status").textContent=""},2200)}
+function renderCats(){
+ const cur=$("l-category").value;
+ $("l-category").innerHTML=categories.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
+ if(categories.some(c=>c.id===cur))$("l-category").value=cur;
+ $("l-filterCat").innerHTML='<option value="">전체 분류</option>'+categories.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
+ $("l-catList").innerHTML=categories.map(c=>`<div class="log-cat-row"><input type="text" maxlength="30" value="${esc(c.name)}" data-catname="${esc(c.id)}"><button class="log-btn danger" data-catdel="${esc(c.id)}">삭제</button></div>`).join("");
+}
+function filtered(){
+ const q=$("l-search").value.trim().toLowerCase(), c=$("l-filterCat").value, a=$("l-filterAI").value, old=$("l-sort").value==="old", thisYear=$("l-thisYear").checked, year=String(new Date().getFullYear());
+ return entries.filter(e=>(!thisYear||String(e.date).startsWith(year+"-"))&&(!q||String(e.text).toLowerCase().includes(q))&&(!c||e.categoryId===c)&&(!a||(a==="ai"?!!e.ai:!e.ai))).sort((x,y)=>{const d=String(x.date).localeCompare(String(y.date));const t=(x.createdAt||0)-(y.createdAt||0);return old?(d||t):-(d||t)});
+}
+function render(){
+ const list=filtered();
+ $("l-list").innerHTML=list.length?list.map(e=>`<article class="log-entry" data-edit="${esc(e.id)}"><div class="log-entry-head"><span>${esc(e.date)}</span><span class="log-cat">[${esc(catName(e.categoryId))}]</span>${e.ai?'<span class="log-ai-mark">(AI)</span>':''}<span class="log-entry-actions"><button data-editbtn="${esc(e.id)}">수정</button><button data-del="${esc(e.id)}">삭제</button></span></div><div class="log-text">${esc(e.text)}</div></article>`).join(""):'<div class="log-empty">아직 기록이 없습니다.</div>';
+}
+function resetForm(){editing=null;$("l-date").value=today();$("l-ai").checked=false;$("l-text").value="";$("l-save").textContent="기록";$("l-cancel").style.display="none"}
+function edit(id){const e=entries.find(x=>x.id===id);if(!e)return;editing=id;$("l-date").value=e.date;$("l-category").value=e.categoryId;$("l-ai").checked=!!e.ai;$("l-text").value=e.text;$("l-save").textContent="수정 저장";$("l-cancel").style.display="inline-block";$("l-text").focus();window.scrollTo({top:0,behavior:"smooth"})}
+function saveEntry(){const text=$("l-text").value.trim();if(!text){status("내용을 입력해 주세요.");$("l-text").focus();return}const obj={date:$("l-date").value||today(),categoryId:$("l-category").value,ai:$("l-ai").checked,text,updatedAt:Date.now()};if(editing){const i=entries.findIndex(e=>e.id===editing);if(i>=0)entries[i]={...entries[i],...obj};status("수정했습니다.")}else{entries.push({id:uid(),createdAt:Date.now(),...obj});status("기록했습니다.")}saveAll();resetForm();render()}
+function download(name,type,text){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function exportJson(){download(`LOG_${today()}.json`,"application/json;charset=utf-8",JSON.stringify({app:"LOG",version:1,exportedAt:new Date().toISOString(),categories,entries,settings},null,2))}
+function exportMd(){const a=[...entries].sort((x,y)=>String(x.date).localeCompare(String(y.date))||((x.createdAt||0)-(y.createdAt||0)));let out="",last="";for(const e of a){if(e.date!==last){if(out)out+="\n";out+=`### ${e.date}\n\n`;last=e.date}out+=`[${catName(e.categoryId)}] ${String(e.text).trim()}${e.ai?" (AI)":""}\n\n`}download(`LOG_${today()}.md`,"text/markdown;charset=utf-8",out.trimEnd()+"\n")}
+function csvCell(v){v=String(v??"");return /[\",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function exportCsv(){const old=confirm("CSV를 오래된 날짜부터 정렬해서 내보낼까요?\n\n확인: 오래된순 / 취소: 최신순");const a=[...entries].sort((x,y)=>{const d=String(x.date).localeCompare(String(y.date))||((x.createdAt||0)-(y.createdAt||0));return old?d:-d});const rows=[["날짜","분류","내용","AI"],...a.map(e=>[e.date,catName(e.categoryId),e.text,e.ai?"AI":""])];download(`LOG_${today()}.csv`,"text/csv;charset=utf-8","\ufeff"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n"))}
+function importJson(file){const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(String(r.result).replace(/^\ufeff/,"").trim());if(!j||j.app!=="LOG"||!Array.isArray(j.categories)||!Array.isArray(j.entries))throw 0;if(!confirm("현재 LOG 기록과 분류를 백업 파일의 내용으로 교체할까요?"))return;categories=j.categories.filter(c=>c&&c.id&&String(c.name||"").trim()).map(c=>({id:String(c.id),name:String(c.name).trim()}));entries=j.entries.filter(e=>e&&e.id&&e.date&&e.categoryId&&typeof e.text==="string");settings=j.settings&&typeof j.settings==="object"?j.settings:{};if(!categories.length)throw 0;saveAll();renderCats();resetForm();$("l-thisYear").checked=settings.thisYear!==false;render();status("LOG 백업을 불러왔습니다.")}catch(e){alert("LOG JSON 파일 형식을 확인해 주세요.")}};r.onerror=()=>alert("파일을 읽는 중 오류가 발생했습니다.");r.readAsText(file)}
+$("l-save").onclick=saveEntry;$("l-cancel").onclick=resetForm;$("l-text").addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();saveEntry()}});
+["l-search","l-filterCat","l-filterAI","l-sort"].forEach(id=>$(id).addEventListener(id==="l-search"?"input":"change",render));
+$("l-thisYear").checked=settings.thisYear!==false;$("l-thisYear").addEventListener("change",()=>{settings.thisYear=$("l-thisYear").checked;saveAll();render()});
+$("l-list").onclick=e=>{const del=e.target.closest("[data-del]");if(del){e.stopPropagation();const id=del.dataset.del;if(confirm("이 기록을 삭제할까요?")){entries=entries.filter(x=>x.id!==id);saveAll();if(editing===id)resetForm();render()}return}const ed=e.target.closest("[data-editbtn]")||e.target.closest("[data-edit]");if(ed)edit(ed.dataset.editbtn||ed.dataset.edit)};
+$("l-manageBtn").onclick=()=>$("l-manage").classList.toggle("open");
+$("l-addCat").onclick=()=>{const n=$("l-newCat").value.trim();if(!n)return;if(categories.some(c=>c.name===n)){status("이미 있는 분류입니다.");return}categories.push({id:uid(),name:n});$("l-newCat").value="";saveAll();renderCats();render()};
+$("l-catList").addEventListener("change",e=>{if(!e.target.matches("[data-catname]"))return;const c=categories.find(x=>x.id===e.target.dataset.catname),n=e.target.value.trim();if(!c||!n){renderCats();return}if(categories.some(x=>x.id!==c.id&&x.name===n)){alert("같은 이름의 분류가 이미 있습니다.");renderCats();return}c.name=n;saveAll();renderCats();render()});
+$("l-catList").addEventListener("click",e=>{const b=e.target.closest("[data-catdel]");if(!b)return;const id=b.dataset.catdel;if(entries.some(x=>x.categoryId===id)){alert("이 분류를 사용하는 기록이 있습니다. 먼저 해당 기록의 분류를 바꿔 주세요.");return}if(categories.length<=1){alert("분류는 하나 이상 필요합니다.");return}if(confirm("이 분류를 삭제할까요?")){categories=categories.filter(x=>x.id!==id);saveAll();renderCats();render()}});
+$("l-exportJson").onclick=exportJson;$("l-exportMd").onclick=exportMd;$("l-exportCsv").onclick=exportCsv;$("l-importJson").onclick=()=>$("l-importFile").click();$("l-importFile").onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)importJson(f);e.target.value=""};
+renderCats();resetForm();render();
+})();
 </script>
 </body></html>
