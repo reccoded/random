@@ -582,6 +582,75 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 }
 </style>
 
+
+<style id="random-concept-modal-size-fix">
+@media (min-width:701px){
+  #c-module .overlay{
+    padding:28px !important;
+    align-items:center !important;
+  }
+  #c-module .overlay .modal{
+    width:min(760px,92vw) !important;
+    max-width:760px !important;
+    max-height:82vh !important;
+    padding:20px !important;
+    overflow:auto !important;
+    border-radius:18px !important;
+  }
+  #c-module .overlay .modalhead{
+    position:sticky;
+    top:-20px;
+    z-index:5;
+    background:var(--panel);
+    padding:4px 0 10px;
+    margin-bottom:4px;
+  }
+  #c-module .overlay .modalhead .iconbtn{
+    flex:0 0 auto;
+  }
+}
+</style>
+
+
+<style id="random-concept-settings-and-nav-fix">
+@media (min-width:701px){
+  #c-module .overlay .modal:has(.concept-settings-main){
+    width:min(1040px,92vw) !important;
+    max-width:1040px !important;
+  }
+  #c-module .concept-settings-main{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+  #c-module .concept-settings-main .settingCard .actions{
+    flex-wrap:nowrap !important;
+  }
+  #c-module .concept-settings-main .settingCard .actions .btn{
+    white-space:nowrap !important;
+  }
+}
+@media (min-width:901px){
+  .random-row{
+    max-width:min(96vw,2220px) !important;
+    width:min(96vw,2220px) !important;
+  }
+}
+</style>
+
+
+<style id="random-log-data-compact-pc">
+@media (min-width:901px){
+  #l-module .log-data{
+    width:max-content !important;
+    max-width:100% !important;
+    justify-self:start;
+  }
+  #l-module .log-data-actions{
+    width:max-content !important;
+    max-width:100% !important;
+  }
+}
+</style>
+
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
@@ -1085,7 +1154,7 @@ function removePrompt(i){if(!confirm("이 프롬프트를 삭제할까요?"))ret
 
 function openSettings(){
  showModal(`<div class="modalhead"><div><h2>설정</h2></div><button class="iconbtn" onclick="c_closeModal()">✕</button></div>
- <div class="settingsGrid">
+ <div class="settingsGrid concept-settings-main">
   <div class="settingCard"><h3>소재 데이터</h3><div class="muted">주인공, 욕망, 상황, 관계 등 조합 재료를 관리합니다.</div><div class="actions"><button class="btn" onclick="openData()">데이터 관리</button></div></div>
   <div class="settingCard"><h3>프롬프트</h3><div class="muted">발전시키기에 사용할 프리셋을 추가·수정·삭제합니다.</div><div class="actions"><button class="btn" onclick="openPromptManager()">프롬프트 관리</button></div></div>
   <div class="settingCard"><h3>통합 백업</h3><div class="muted">CONCEPT · Q&amp;A · SELECT 데이터를 하나의 JSON으로 저장하거나 복원합니다. LOG는 포함하지 않습니다.</div><div class="actions"><button class="btn" onclick="exportUnifiedData()">통합 내보내기</button><button class="btn" onclick="importUnifiedData()">통합 가져오기</button></div></div>
@@ -1110,10 +1179,12 @@ function exportUnifiedData(){
   app:"RANDOM",version:1,exportedAt:new Date().toISOString(),
   concept:{data:clone(data),prompts:clone(prompts),favorites:getFavorites()},
   qa:{categories:structuredClone(categories),questions:structuredClone(questions),favorites:[...favorites]},
-  select:{sets:structuredClone(db.sets),active:db.active,mode:mode}
+  select:window.randomSelectBridge.exportData()
  };
  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),a=document.createElement("a");
- a.href=URL.createObjectURL(blob);a.download=`RANDOM_${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+ const url=URL.createObjectURL(blob);
+ a.href=url;a.download=`RANDOM_${new Date().toISOString().slice(0,10)}.json`;
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)
 }
 function importUnifiedData(){
  const input=document.createElement("input");input.type="file";input.accept=".json,application/json";
@@ -1127,8 +1198,7 @@ function importUnifiedData(){
    if(!confirm("현재 CONCEPT · Q&A · SELECT 데이터를 백업 파일 내용으로 교체할까요?\n\nLOG 기록은 변경되지 않습니다."))return;
    data=x.concept.data;prompts=x.concept.prompts;setFavorites(x.concept.favorites);saveData();savePrompts();current=null;selectedKeys.clear();renderEmpty();
    categories=x.qa.categories;questions=x.qa.questions;favorites=new Set(x.qa.favorites);currentQuestionId=null;questionMode="normal";selectedCategories.clear();q_save();updateNav();
-   const cleanSets=x.select.sets.map(set=>({id:String(set.id||uid()),name:String(set.name||"이름 없는 세트"),items:Array.isArray(set.items)?set.items.map(v=>String(v)):[],removed:Array.isArray(set.removed)?set.removed.filter(Number.isInteger):[]}));
-   db.sets=cleanSets;db.active=cleanSets.some(set=>set.id===x.select.active)?x.select.active:cleanSets[0].id;mode=x.select.mode==="remove"?"remove":"random";s_save();resetResult();s_render();
+   window.randomSelectBridge.importData(x.select);
    alert("CONCEPT · Q&A · SELECT 통합 백업을 가져왔습니다.\nLOG 기록은 그대로 유지됩니다.");openSettings();
   }catch(err){console.error("RANDOM unified import error",err);alert("RANDOM 통합 백업 JSON 파일 형식을 확인해 주세요.");}};
   r.onerror=()=>alert("파일을 읽는 중 오류가 발생했습니다.");r.readAsText(f,"utf-8");};input.click();
@@ -1137,7 +1207,7 @@ function resetUnifiedData(){
  if(!confirm("CONCEPT · Q&A · SELECT 데이터를 모두 초기화할까요?\n\nLOG 기록은 유지됩니다. 내보내지 않은 데이터는 복구할 수 없습니다."))return;
  data={};Object.keys(BASE_DATA).forEach(k=>data[k]=[]);prompts=[];setFavorites([]);saveData();savePrompts();current=null;selectedKeys.clear();renderEmpty();
  categories=structuredClone(DEFAULT_CATEGORIES);questions=structuredClone(QUESTIONS);favorites=new Set();currentQuestionId=null;questionMode="normal";selectedCategories.clear();q_save();updateNav();
- const first={id:uid(),name:"A세트",items:["카페 가기","도서관 가기","운동장 가기"],removed:[]};db={sets:[first],active:first.id,mode:"random"};mode="random";s_save();resetResult();s_render();
+ window.randomSelectBridge.resetData();
  alert("CONCEPT · Q&A · SELECT 데이터를 초기화했습니다.\nLOG 기록은 그대로 유지됩니다.");openSettings();
 }
 function exportData(){
@@ -1849,6 +1919,30 @@ function s_save(){
   catch(e){alert("브라우저 저장 기능을 사용할 수 없습니다.")}
 }
 function active(){return db.sets.find(s=>s.id===db.active)||db.sets[0]}
+
+window.randomSelectBridge={
+  exportData(){
+    return structuredClone({sets:db.sets,active:db.active,mode:mode});
+  },
+  importData(x){
+    if(!x||!Array.isArray(x.sets)||!x.sets.length) throw new Error("invalid SELECT data");
+    const cleanSets=x.sets.map(set=>({
+      id:String(set.id||uid()),
+      name:String(set.name||"이름 없는 세트"),
+      items:Array.isArray(set.items)?set.items.map(v=>String(v)):[],
+      removed:Array.isArray(set.removed)?set.removed.filter(Number.isInteger):[]
+    }));
+    db.sets=cleanSets;
+    db.active=cleanSets.some(set=>set.id===x.active)?x.active:cleanSets[0].id;
+    mode=x.mode==="remove"?"remove":"random";
+    s_save();resetResult();s_render();
+  },
+  resetData(){
+    const first={id:uid(),name:"A세트",items:["카페 가기","도서관 가기","운동장 가기"],removed:[]};
+    db={sets:[first],active:first.id,mode:"random"};
+    mode="random";s_save();resetResult();s_render();
+  }
+};
 
 function getRemovedSet(){
   const s=active();
