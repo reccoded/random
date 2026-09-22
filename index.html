@@ -540,6 +540,48 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 #l-module .log-ai{align-self:end}
 #l-module .log-year-toggle{min-height:42px}
 </style>
+
+<style id="random-pc-wide-concept-log">
+/* PC wide layout: CONCEPT + LOG only. Mobile remains unchanged. */
+@media (min-width:901px){
+  #c-module.active,
+  #l-module.active{
+    width:min(96vw,2220px);
+    max-width:min(96vw,2220px);
+    margin-left:50%;
+    transform:translateX(-50%);
+  }
+
+  #c-module .app{
+    max-width:none;
+    width:100%;
+  }
+  #c-module .c-results{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+
+  #l-module .log-app{
+    width:100%;
+    max-width:none;
+  }
+  #l-module .log-list{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+  }
+  #l-module .log-entry{
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+}
+@media (min-width:1200px) and (max-width:1599px){
+  #l-module .log-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:901px) and (max-width:1199px){
+  #l-module .log-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
@@ -639,15 +681,6 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 <div id="s-items" class="items"></div>
 </section>
 
-<section class="card backup-card">
-<h2>프리셋 백업</h2>
-<div class="backup-row">
-<button class="btn" id="s-exportBackup">⇩ 프리셋 내보내기</button>
-<button class="btn" id="s-importBackup">⇧ 프리셋 가져오기</button>
-<input type="file" id="s-importFile" accept="application/json,.json" hidden>
-</div>
-
-</section>
 </div>
 
 <div class="modal-back" id="s-modalBack">
@@ -993,7 +1026,7 @@ function swapOne(k){
 function saveCurrent(){
  if(!current)return; const list=JSON.parse(localStorage.getItem("conceptFavorites")||localStorage.getItem("conceptMixerSaved")||"[]");
  list.unshift({id:Date.now(),date:new Date().toLocaleString("ko-KR"),combo:clone(current),memo:""});
- localStorage.setItem("conceptFavorites",JSON.stringify(list.slice(0,100)));alert("즐겨찾기에 저장했습니다.")
+ localStorage.setItem("conceptFavorites",JSON.stringify(list));alert("즐겨찾기에 저장했습니다.")
 }
 function openSaved(){
  const list=JSON.parse(localStorage.getItem("conceptFavorites")||localStorage.getItem("conceptMixerSaved")||"[]");
@@ -1055,8 +1088,8 @@ function openSettings(){
  <div class="settingsGrid">
   <div class="settingCard"><h3>소재 데이터</h3><div class="muted">주인공, 욕망, 상황, 관계 등 조합 재료를 관리합니다.</div><div class="actions"><button class="btn" onclick="openData()">데이터 관리</button></div></div>
   <div class="settingCard"><h3>프롬프트</h3><div class="muted">발전시키기에 사용할 프리셋을 추가·수정·삭제합니다.</div><div class="actions"><button class="btn" onclick="openPromptManager()">프롬프트 관리</button></div></div>
-  <div class="settingCard"><h3>백업</h3><div class="muted">소재 데이터와 프롬프트 프리셋을 하나의 JSON으로 저장하거나 복원합니다.</div><div class="actions"><button class="btn" onclick="exportData()">내보내기</button><button class="btn" onclick="importData()">가져오기</button></div></div>
-  <div class="settingCard"><h3>초기화</h3><div class="muted">모든 데이터를 비우거나, CONCEPT의 기본 소재와 5개 기본 프롬프트로 되돌릴 수 있습니다. 즐겨찾기는 유지됩니다.</div><div class="actions"><button class="btn danger" onclick="resetAllData()">모든 데이터 초기화</button><button class="btn" onclick="restoreDefaults()">기본값 복원</button></div></div>
+  <div class="settingCard"><h3>통합 백업</h3><div class="muted">CONCEPT · Q&amp;A · SELECT 데이터를 하나의 JSON으로 저장하거나 복원합니다. LOG는 포함하지 않습니다.</div><div class="actions"><button class="btn" onclick="exportUnifiedData()">통합 내보내기</button><button class="btn" onclick="importUnifiedData()">통합 가져오기</button></div></div>
+  <div class="settingCard"><h3>초기화</h3><div class="muted">CONCEPT · Q&amp;A · SELECT 데이터를 한 번에 초기화합니다. LOG 기록은 그대로 유지됩니다.</div><div class="actions"><button class="btn danger" onclick="resetUnifiedData()">통합 데이터 초기화</button><button class="btn" onclick="restoreDefaults()">CONCEPT 기본값 복원</button></div></div>
  </div>`)
 }
 function openData(){const cats=Object.keys(LABELS).filter(k=>Array.isArray(data[k]));showModal(`<div id="dataModal"></div>`);renderDataModal(cats[0]||"protagonist")}
@@ -1072,6 +1105,41 @@ function renderDataModal(active){
 function editData(cat,i){const old=i>=0?data[cat][i]:"";showModal(`<div class="modalhead"><div><h2>${i>=0?"데이터 수정":"데이터 추가"}</h2><div class="muted">${LABELS[cat][0]} ${LABELS[cat][1]}</div></div><button class="iconbtn" onclick="c_closeModal()">✕</button></div><div class="field"><label>내용</label><textarea id="editValue">${esc(old)}</textarea></div><div class="modalfoot"><button class="btn" onclick="openData()">취소</button><button class="btn primary" onclick="saveDataItem('${cat}',${i})">저장</button></div>`)}
 function saveDataItem(cat,i){const v=document.getElementById("editValue").value.trim();if(!v)return alert("내용을 입력해주세요.");if(!Array.isArray(data[cat]))data[cat]=[];if(i>=0)data[cat][i]=v;else data[cat].push(v);saveData();openData()}
 function removeData(cat,i){if(!confirm("이 데이터를 삭제할까요?"))return;data[cat].splice(i,1);saveData();openData()}
+function exportUnifiedData(){
+ const payload={
+  app:"RANDOM",version:1,exportedAt:new Date().toISOString(),
+  concept:{data:clone(data),prompts:clone(prompts),favorites:getFavorites()},
+  qa:{categories:structuredClone(categories),questions:structuredClone(questions),favorites:[...favorites]},
+  select:{sets:structuredClone(db.sets),active:db.active,mode:mode}
+ };
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=`RANDOM_${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+}
+function importUnifiedData(){
+ const input=document.createElement("input");input.type="file";input.accept=".json,application/json";
+ input.onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{
+   const x=JSON.parse(String(r.result??"").replace(/^\uFEFF/,"").trim());
+   if(!x||x.app!=="RANDOM"||!x.concept||!x.qa||!x.select)throw new Error("invalid");
+   if(!x.concept.data||!Array.isArray(x.concept.prompts)||!Array.isArray(x.concept.favorites))throw new Error("concept");
+   if(!Array.isArray(x.qa.categories)||!Array.isArray(x.qa.questions)||!Array.isArray(x.qa.favorites))throw new Error("qa");
+   if(!Array.isArray(x.select.sets)||!x.select.sets.length)throw new Error("select");
+   if(!confirm("현재 CONCEPT · Q&A · SELECT 데이터를 백업 파일 내용으로 교체할까요?\n\nLOG 기록은 변경되지 않습니다."))return;
+   data=x.concept.data;prompts=x.concept.prompts;setFavorites(x.concept.favorites);saveData();savePrompts();current=null;selectedKeys.clear();renderEmpty();
+   categories=x.qa.categories;questions=x.qa.questions;favorites=new Set(x.qa.favorites);currentQuestionId=null;questionMode="normal";selectedCategories.clear();q_save();updateNav();
+   const cleanSets=x.select.sets.map(set=>({id:String(set.id||uid()),name:String(set.name||"이름 없는 세트"),items:Array.isArray(set.items)?set.items.map(v=>String(v)):[],removed:Array.isArray(set.removed)?set.removed.filter(Number.isInteger):[]}));
+   db.sets=cleanSets;db.active=cleanSets.some(set=>set.id===x.select.active)?x.select.active:cleanSets[0].id;mode=x.select.mode==="remove"?"remove":"random";s_save();resetResult();s_render();
+   alert("CONCEPT · Q&A · SELECT 통합 백업을 가져왔습니다.\nLOG 기록은 그대로 유지됩니다.");openSettings();
+  }catch(err){console.error("RANDOM unified import error",err);alert("RANDOM 통합 백업 JSON 파일 형식을 확인해 주세요.");}};
+  r.onerror=()=>alert("파일을 읽는 중 오류가 발생했습니다.");r.readAsText(f,"utf-8");};input.click();
+}
+function resetUnifiedData(){
+ if(!confirm("CONCEPT · Q&A · SELECT 데이터를 모두 초기화할까요?\n\nLOG 기록은 유지됩니다. 내보내지 않은 데이터는 복구할 수 없습니다."))return;
+ data={};Object.keys(BASE_DATA).forEach(k=>data[k]=[]);prompts=[];setFavorites([]);saveData();savePrompts();current=null;selectedKeys.clear();renderEmpty();
+ categories=structuredClone(DEFAULT_CATEGORIES);questions=structuredClone(QUESTIONS);favorites=new Set();currentQuestionId=null;questionMode="normal";selectedCategories.clear();q_save();updateNav();
+ const first={id:uid(),name:"A세트",items:["카페 가기","도서관 가기","운동장 가기"],removed:[]};db={sets:[first],active:first.id,mode:"random"};mode="random";s_save();resetResult();s_render();
+ alert("CONCEPT · Q&A · SELECT 데이터를 초기화했습니다.\nLOG 기록은 그대로 유지됩니다.");openSettings();
+}
 function exportData(){
  const backup={app:"CONCEPT",version:3,exportedAt:new Date().toISOString(),data,prompts};
  const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"}),a=document.createElement("a");
@@ -1680,20 +1748,7 @@ function renderManage(){
         </div>`).join("")}
       </div>
     </div>
-    <div class="panel" style="margin-top:16px">
-      <div class="panel-title">데이터 백업</div>
-      
-      <div class="toolbar" style="margin:0">
-        <button class="primary" id="q_exportBackup">↓ 백업 내보내기</button>
-        <button class="secondary" id="importBackupBtn">↑ 백업 가져오기</button>
-        <input type="file" id="importBackupFile" accept="application/json,.json" class="hidden">
-      </div>
-    </div>
   `;
-  document.getElementById("q_exportBackup").onclick=q_exportBackup;
-  document.getElementById("importBackupBtn").onclick=()=>document.getElementById("importBackupFile").click();
-  document.getElementById("importBackupFile").onchange=importBackup;
-
   document.getElementById("addQ").onclick=()=>{
     const text=document.getElementById("qText").value.trim(), categoryId=document.getElementById("qCat").value;
     if(!text){toast("질문을 입력해 주세요.");return}
@@ -2084,10 +2139,6 @@ function importBackupFile(file){
   reader.onerror=()=>alert("SELECT 파일을 읽는 중 오류가 발생했습니다.");
   reader.readAsText(file,"utf-8");
 }
-
-s_$("s-exportBackup").onclick=s_exportBackup;
-s_$("s-importBackup").onclick=()=>s_$("s-importFile").click();
-s_$("s-importFile").onchange=e=>importBackupFile(e.target.files[0]);
 
 s_$("s-setSelect").onchange=e=>{
   db.active=e.target.value;
