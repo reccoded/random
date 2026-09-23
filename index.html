@@ -651,6 +651,72 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 }
 </style>
 
+
+<style id="random-beige-select-redesign-v2">
+/* Warm neutral beige pass: presentation only. Existing settings/backup structure is untouched. */
+html,body{background:#eee9dc}
+.random-nav{background:#fbf8ef;border-bottom-color:#d7cfbd}
+.random-tab{background:#f3eee1;border-color:#d7cfbd;color:#343128}
+.random-tab.active{background:#65715a;border-color:#65715a;color:#fffdf7}
+
+#c-module{--bg:#eee9dc;--panel:#fbf8ef;--panel2:#f4efe2;--panel3:#ece6d7;--text:#302f29;--muted:#716f65;--line:#d7cfbd;--accent:#65715a;--accent-hover:#536049;--accent-soft:#e2e6d9;--good:#526b55;--bad:#8a625b}
+#c-module .hero{padding-top:15px!important}
+#c-module .toolbar{margin-bottom:8px!important}
+#c-module .empty{padding:30px 20px!important}
+#c-module .mode.active,#c-module .tab.active{color:#3e4938;border-color:#aeb8a2}
+#c-module .card.selectable:hover,#c-module .c-results>.card.selectable:hover{border-color:#b9b49f;background:#f2eee1}
+#c-module .feedback .btn:hover{border-color:#b9b49f}
+#c-module .searchrow input:focus,#c-module .field input:focus,#c-module .field textarea:focus,#c-module .field select:focus,#c-module .promptedit:focus{border-color:#7c8870;box-shadow:0 0 0 3px rgba(101,113,90,.10)}
+
+#q-module{--bg:#eee9dc;--paper:#fbf8ef;--panel:#f4efe2;--line:#d7cfbd;--text:#302f29;--muted:#716f65;--accent:#65715a;--accent-dark:#536049;--ink:#65715a}
+#q-module .primary,#q-module .nav button.active,#q-module .mobile-tabs button.active,#q-module .chip.active{background:#65715a!important;border-color:#65715a!important;color:#fffdf7!important}
+#q-module .danger{border-color:#cdbdb2!important;background:#f6f0e8!important;color:#795d55!important}
+#q-module select:focus,#q-module input:focus,#q-module textarea:focus{border-color:#7c8870!important;box-shadow:0 0 0 3px rgba(101,113,90,.10)!important}
+
+#s-module{--bg:#eee9dc;--card:#fbf8ef;--text:#302f29;--muted:#77736a;--line:#d7cfbd;--accent:#65715a;--soft:#ecebdd;--danger:#80645d;--dangerbg:#f2ece5}
+#s-module .app{max-width:900px;padding-top:16px}
+#s-module header{display:none}
+#s-module .card{background:#fbf8ef;box-shadow:0 12px 34px rgba(74,68,53,.07)}
+#s-module .select-decision-card{position:relative;padding:18px 20px 20px}
+#s-module .select-gear{position:absolute;right:14px;top:14px;z-index:3;width:34px;height:34px;border:1px solid var(--line);border-radius:11px;background:#f5f1e6;color:#68685f;font-size:17px;line-height:1}
+#s-module .select-gear:hover,#s-module .items-edit:hover{background:#e8eadf;color:#4f5d48}
+#s-module .select-mode-segment{width:min(430px,calc(100% - 46px));margin:0 auto 4px}
+#s-module .segment{background:#ece8dc;border-color:#d7cfbd}
+#s-module .segment .mode{color:#6e6b62}
+#s-module .segment .mode.active{background:#fbf8ef;color:#536049;box-shadow:0 3px 12px rgba(72,75,61,.08)}
+#s-module .mode-help{margin:7px auto 2px;min-height:18px}
+#s-module .hero-card .big-result{min-height:170px;margin-top:2px}
+#s-module .result-label{color:#77736a}
+#s-module .result-text{color:#302f29}
+#s-module #s-pickBtn{background:#65715a!important;border-color:#65715a!important;color:#fffdf7!important;box-shadow:0 7px 18px rgba(76,91,67,.15)!important}
+#s-module #s-pickBtn:hover{background:#536049!important;border-color:#536049!important}
+#s-module .items-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+#s-module .items-head h2{margin:0}
+#s-module .items-edit{width:32px;height:32px;border:1px solid var(--line);border-radius:10px;background:#f5f1e6;color:#68685f;font-size:16px}
+#s-module .item{background:#f7f3e9}
+#s-module .item.removed{background:#ebe8df;color:#a29d91}
+#s-module .state{color:#65715a}
+#s-module .modal{background:#fbf8ef}
+#s-module .set-card{background:#f7f3e9;cursor:pointer;transition:.12s ease}
+#s-module .set-card:hover{border-color:#b9b49f;background:#f2eee2}
+#s-module .set-card.active{border-color:#9eaa91;background:#e9ecdf;box-shadow:inset 3px 0 0 #65715a}
+#s-module .set-actions{margin-left:auto}
+#s-module .icon-only{width:36px;min-width:36px;padding:0;font-size:16px;background:#eeeadf}
+#s-module .delete-set{color:#80645d}
+#s-module .btn.primary{background:#65715a;color:#fffdf7}
+#s-module .input,#s-module .select{background:#fffdf7;border-color:#d7cfbd}
+#s-module .input:focus,#s-module .select:focus{border-color:#7c8870;box-shadow:0 0 0 3px rgba(101,113,90,.10)}
+
+#l-module{--lbg:#eee9dc;--lpanel:#fbf8ef;--lline:#d7cfbd;--ltext:#302f29;--lmuted:#716f65;--laccent:#65715a;--ldanger:#80645d}
+@media(max-width:620px){
+ #s-module .select-decision-card{padding:15px 14px 17px}
+ #s-module .select-gear{right:10px;top:10px}
+ #s-module .select-mode-segment{width:calc(100% - 42px);margin-left:0}
+ #s-module .hero-card .big-result{min-height:155px}
+ #s-module .set-card{flex-direction:row;align-items:center}
+ #s-module .set-actions{width:auto;display:flex;grid-template-columns:none}
+}
+</style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
@@ -713,40 +779,27 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   
 </header>
 
-<section class="card hero-card">
-<div class="hero-meta"><span class="chip" id="s-heroSet">세트</span><span class="chip" id="s-heroMode">🎲 랜덤 선택</span></div>
+<section class="card hero-card select-decision-card">
+<button class="select-gear" id="s-manageSets" type="button" aria-label="세트 관리" title="세트 관리">⚙</button>
+<div class="segment select-mode-segment">
+<button class="mode active" id="s-modeRandom"><div class="title">랜덤 선택</div><div class="desc">전체 항목에서 매번 무작위로 선택합니다.</div></button>
+<button class="mode" id="s-modeRemove"><div class="title">하나씩 제거</div><div class="desc">뽑힌 항목을 제거하고 마지막 1개까지 이어갑니다.</div></button>
+</div>
+<div class="mode-help" id="s-modeHelp">전체 항목에서 매번 무작위로 하나를 고릅니다.</div>
 <div class="big-result">
 <div class="result-label" id="s-resultLabel">오늘의 결정</div>
 <div class="result-text" id="s-resultText">결정이 필요하신가요?</div>
 <div class="result-sub" id="s-resultSub">고민은 여기까지.</div>
 </div>
 <div class="main-actions">
-<button class="btn primary" id="s-pickBtn">🎲 선택하기</button>
+<button class="btn primary" id="s-pickBtn">선택하기</button>
 <button class="btn" id="s-resetRemoved" style="display:none">↺ 제거 항목 초기화</button>
 </div>
 <div class="status" id="s-status"></div>
 </section>
 
-<section class="card compact-card">
-<h2>선택 방식</h2>
-<div class="segment">
-<button class="mode active" id="s-modeRandom"><div class="title">🎲 랜덤 선택</div><div class="desc">전체 항목에서 매번 무작위로 선택합니다.</div></button>
-<button class="mode" id="s-modeRemove"><div class="title">✂️ 하나씩 제거</div><div class="desc">뽑힌 항목을 제거하고 마지막 1개까지 이어갑니다.</div></button>
-</div>
-<div class="mode-help" id="s-modeHelp">전체 항목에서 매번 무작위로 하나를 고릅니다.</div>
-</section>
-
-<section class="card compact-card">
-<h2>선택 세트</h2>
-<div class="topbar">
-<select id="s-setSelect" class="select set-select"></select>
-<button class="btn" id="s-manageSets">세트 관리</button>
-<button class="btn primary" id="s-newSet">＋ 새 세트</button>
-</div>
-</section>
-
 <section class="card items-card">
-<h2>현재 항목 <span id="s-itemCount" class="counter"></span></h2>
+<div class="items-head"><h2>현재 항목 <span id="s-itemCount" class="counter"></span></h2><button class="items-edit" id="s-editItems" type="button" aria-label="현재 항목 수정" title="현재 항목 수정">✎</button></div>
 <div id="s-items" class="items"></div>
 </section>
 
@@ -1970,13 +2023,7 @@ function s_render(){
   const s=active();
   const rem=getRemovedSet();
 
-  s_$("s-setSelect").innerHTML=db.sets.map(x=>
-    '<option value="'+esc(x.id)+'">'+esc(x.name)+" · "+x.items.length+"개</option>"
-  ).join("");
-  s_$("s-setSelect").value=s.id;
-  s_$("s-heroSet").textContent=s.name+" · "+s.items.length+"개";
-  s_$("s-heroMode").textContent=mode==="remove"?"✂️ 하나씩 제거":"🎲 랜덤 선택";
-  s_$("s-modeHelp").textContent=mode==="remove"?"뽑힌 항목을 하나씩 제외해 마지막 1개까지 좁힙니다.":"전체 항목에서 매번 무작위로 하나를 고릅니다.";
+  s_$("s-modeHelp").textContent=(s.name+" · "+s.items.length+"개 · ")+(mode==="remove"?"뽑힌 항목을 하나씩 제외해 마지막 1개까지 좁힙니다.":"전체 항목에서 매번 무작위로 하나를 고릅니다.");
 
   const alive=s.items.map((_,i)=>i).filter(i=>!rem.has(i));
   s_$("s-itemCount").textContent=(mode==="remove"?"남은 "+alive.length+"개 · ":"")+"전체 "+s.items.length+"개";
@@ -1986,7 +2033,7 @@ function s_render(){
     : '<div class="empty" style="grid-column:1/-1">이 세트에는 항목이 없습니다.</div>';
 
   s_$("s-resetRemoved").style.display=(mode==="remove" && rem.size)?"block":"none";
-  s_$("s-pickBtn").textContent="🎲 선택하기";
+  s_$("s-pickBtn").textContent="선택하기";
   s_$("s-modeRandom").classList.toggle("active",mode==="random");
   s_$("s-modeRemove").classList.toggle("active",mode==="remove");
 }
@@ -2106,13 +2153,11 @@ function renderSetList(){
   const list=s_$("setList");
   if(!list)return;
   list.innerHTML=db.sets.map(s=>
-    '<div class="set-card">'+
-      '<div><div class="set-name">'+esc(s.name)+'</div><div class="set-count">'+s.items.length+"개 항목</div></div>"+
+    '<div class="set-card '+(s.id===db.active?"active":"")+'" data-set-id="'+esc(s.id)+'" tabindex="0" role="button" aria-label="'+esc(s.name)+' 세트 선택">'+
+      '<div><div class="set-name">'+esc(s.name)+'</div><div class="set-count">'+s.items.length+"개 항목"+(s.id===db.active?" · 선택됨":"")+"</div></div>"+
       '<div class="set-actions">'+
-        '<button class="small" data-action="load" data-id="'+esc(s.id)+'">로드</button>'+
-        '<button class="small" data-action="s-items" data-id="'+esc(s.id)+'">편집</button>'+
-        '<button class="small" data-action="rename" data-id="'+esc(s.id)+'">제목</button>'+
-        '<button class="small" data-action="delete" data-id="'+esc(s.id)+'">삭제</button>'+
+        '<button class="small icon-only" data-action="rename" data-id="'+esc(s.id)+'" aria-label="제목 수정" title="제목 수정">✎</button>'+
+        '<button class="small icon-only delete-set" data-action="delete" data-id="'+esc(s.id)+'" aria-label="세트 삭제" title="세트 삭제">×</button>'+
       '</div>'+
     '</div>'
   ).join("");
@@ -2234,12 +2279,6 @@ function importBackupFile(file){
   reader.readAsText(file,"utf-8");
 }
 
-s_$("s-setSelect").onchange=e=>{
-  db.active=e.target.value;
-  resetResult();
-  s_save();s_render();
-};
-
 s_$("s-modeRandom").onclick=()=>setMode("random");
 s_$("s-modeRemove").onclick=()=>setMode("remove");
 s_$("s-pickBtn").onclick=pick;
@@ -2252,25 +2291,23 @@ s_$("s-resetRemoved").onclick=()=>{
 };
 
 s_$("s-manageSets").onclick=openSets;
-s_$("s-newSet").onclick=newSet;
+s_$("s-editItems").onclick=()=>openItems(active().id);
 s_$("s-closeModal").onclick=s_closeModal;
 s_$("s-modalBack").onclick=e=>{if(e.target===s_$("s-modalBack"))s_closeModal()};
 
 s_$("s-modalBody").addEventListener("click",e=>{
+  const setCard=e.target.closest(".set-card[data-set-id]");
   const btn=e.target.closest("button[data-action]");
+  if(setCard && !btn){
+    db.active=setCard.dataset.setId;
+    resetResult();s_save();s_render();renderSetList();
+    return;
+  }
   if(!btn)return;
 
   const id=btn.dataset.id;
   const s=db.sets.find(x=>x.id===id);
   if(!s)return;
-
-  if(btn.dataset.action==="load"){
-    db.active=id;
-    resetResult();
-    s_save();s_render();s_closeModal();
-  }
-
-  if(btn.dataset.action==="s-items")openItems(id);
 
   if(btn.dataset.action==="rename"){
     const name=prompt("세트 이름을 수정하세요.",s.name);
