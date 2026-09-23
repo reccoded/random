@@ -707,15 +707,65 @@ html,body{background:#eee9dc}
 #s-module .input,#s-module .select{background:#fffdf7;border-color:#d7cfbd}
 #s-module .input:focus,#s-module .select:focus{border-color:#7c8870;box-shadow:0 0 0 3px rgba(101,113,90,.10)}
 
-#l-module{--lbg:#eee9dc;--lpanel:#fbf8ef;--lline:#d7cfbd;--ltext:#302f29;--lmuted:#716f65;--laccent:#65715a;--ldanger:#80645d}
+#l-module{--lbg:#eee9dc;--lpanel:#fbf8ef;--lline:#d7cfbd;--ltext:#302f29;--lmuted:#716f65;--laccent:#65715a;--ldanger:#a75249}
+#l-module .log-btn.primary{background:#65715a;border-color:#65715a;color:#fffdf7}
+#l-module .log-btn.primary:hover{background:#536049;border-color:#536049}
+#l-module input:focus,#l-module select:focus,#l-module textarea:focus{border-color:#7c8870;box-shadow:0 0 0 3px rgba(101,113,90,.10)}
+#l-module .log-cat{color:#65715a}
+#l-module .log-ai-mark{color:#65715a}
+#l-module .log-compose,#l-module .log-tools,#l-module .log-entry{box-shadow:none}
+#l-module .log-search-wrap{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:7px}
+#l-module .log-settings-btn{width:38px;height:42px;padding:0;border:1px solid var(--lline);border-radius:10px;background:#f3efe4;color:#60675a;font-size:17px;cursor:pointer}
+#l-module .log-settings-btn:hover{background:#e7eadf;color:#4f5d48}
+#l-module .log-settings-back{display:none;position:fixed;inset:0;z-index:10020;background:rgba(40,39,34,.35);padding:18px;align-items:center;justify-content:center}
+#l-module .log-settings-back.open{display:flex}
+#l-module .log-settings-panel{width:min(560px,100%);max-height:min(82vh,720px);overflow:auto;background:#fbf8ef;border:1px solid #d7cfbd;border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(48,47,41,.16)}
+#l-module .log-settings-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+#l-module .log-settings-head h3{margin:0;font-size:17px}
+#l-module .log-settings-close{width:34px;height:34px;padding:0}
+#l-module .log-data-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#l-module .log-data-actions .log-btn{width:100%}
+#l-module .log-btn.danger-outline{background:transparent;border-color:#b45a52;color:#a8423a}
+#l-module .log-btn.danger-outline:hover{background:#fff1ef}
+#l-module .log-manage{margin-top:12px;background:#f5f1e7;border:1px solid var(--lline);border-radius:12px}
+#l-module .log-autosave-note{min-height:18px;margin:7px 2px 0;color:var(--lmuted);font-size:12px}
 @media(max-width:620px){
  #s-module .select-decision-card{padding:15px 14px 17px}
  #s-module .select-gear{right:10px;top:10px}
- #s-module .select-mode-segment{width:calc(100% - 42px);margin-left:0}
+ #s-module .select-mode-segment{width:min(300px,calc(100% - 64px));margin-left:auto;margin-right:auto}
+ #s-module .segment .mode{padding-left:8px;padding-right:8px}
+ #s-module .segment .mode .desc{display:none}
  #s-module .hero-card .big-result{min-height:155px}
+ #l-module .log-filter-row{grid-template-columns:1fr 1fr}
+ #l-module .log-search-wrap{grid-column:1/-1}
+ #l-module .log-filter-row input[type=search]{grid-column:auto}
+ #l-module .log-settings-back{padding:10px}
+ #l-module .log-settings-panel{padding:13px;border-radius:15px}
+ #l-module .log-data-actions{grid-template-columns:1fr 1fr}
  #s-module .set-card{flex-direction:row;align-items:center}
  #s-module .set-actions{width:auto;display:flex;grid-template-columns:none}
 }
+</style>
+<style id="log-settings-finish-v2">
+#l-module .log-filter-row{grid-template-columns:minmax(150px,.9fr) 140px 120px 130px auto 40px;align-items:center}
+#l-module .log-filter-row>#l-search{min-width:0}
+#l-module .log-settings-btn{justify-self:end;width:40px;height:40px;border:1px solid #bfc7b8;border-radius:11px;background:#edf0e7;color:#53604d;transition:.16s ease}
+#l-module .log-settings-btn:hover{background:#dfe6d7;border-color:#8f9c84;color:#46523f;transform:translateY(-1px);box-shadow:0 4px 10px rgba(78,91,70,.10)}
+#l-module .log-settings-panel{width:min(590px,100%)}
+#l-module .log-manage.log-manage-always{display:block;margin:0 0 14px;padding:14px;background:#f5f2e9;border:1px solid #d7cfbd;border-radius:13px}
+#l-module .log-manage.log-manage-always h3{color:#4f5d48}
+#l-module .log-data-actions{display:grid;gap:9px;margin-top:9px}
+#l-module .log-data-primary{grid-template-columns:repeat(3,minmax(0,1fr))}
+#l-module .log-data-export{grid-template-columns:repeat(2,minmax(0,1fr))}
+#l-module .log-data-actions .log-btn{width:100%;min-height:42px;border-radius:11px;font-weight:750;transition:.16s ease}
+#l-module .log-data-actions .log-btn:hover,#l-module .log-addcat .log-btn:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(72,82,65,.10)}
+#l-module .log-action-accent{background:#e6ebdf;border-color:#aebaa4;color:#4b5945}
+#l-module .log-action-accent:hover{background:#d8e1d0;border-color:#899a7d;color:#3f4d39}
+#l-module .log-action-soft{background:#f1eee4;border-color:#cec7b8;color:#5f6258}
+#l-module .log-action-soft:hover{background:#e7e4d8;border-color:#afa897;color:#4e5249}
+#l-module .log-btn.danger-outline{background:#fffaf8;border-color:#c56c63;color:#a8423a}
+#l-module .log-btn.danger-outline:hover{background:#fff0ed;border-color:#ad4e46;color:#963b34}
+@media(max-width:620px){#l-module .log-filter-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 40px}#l-module .log-filter-row>#l-search{grid-column:1/3}#l-module .log-filter-row>#l-filterCat{grid-column:1/2}#l-module .log-filter-row>#l-filterAI{grid-column:2/3}#l-module .log-filter-row>#l-sort{grid-column:1/2}#l-module .log-filter-row>.log-year-toggle{grid-column:2/3}#l-module .log-filter-row>#l-settingsBtn{grid-column:3;grid-row:1;justify-self:end}#l-module .log-data-primary{grid-template-columns:repeat(3,minmax(0,1fr))}#l-module .log-data-export{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
@@ -824,8 +874,8 @@ html,body{background:#eee9dc}
       </div>
       <label for="l-text">내용</label>
       <textarea id="l-text" placeholder="컨셉, 생각, 대사, 소재를 기록하세요."></textarea>
-      <div class="log-actions"><button class="log-btn" id="l-cancel" style="display:none">수정 취소</button><button class="log-btn primary" id="l-save">기록</button></div>
-      <div class="log-status" id="l-status"></div>
+      <div class="log-actions"><button class="log-btn" id="l-cancel" style="display:none">수정 취소</button></div>
+      <div class="log-autosave-note" id="l-status">내용을 입력하면 자동으로 저장됩니다.</div>
     </section>
 
     <section class="log-tools">
@@ -835,24 +885,29 @@ html,body{background:#eee9dc}
         <select id="l-filterAI"><option value="">전체 출처</option><option value="original">직접 작성</option><option value="ai">AI</option></select>
         <select id="l-sort"><option value="new">최신순</option><option value="old">오래된순</option></select>
         <label class="log-year-toggle"><input id="l-thisYear" type="checkbox" checked> 올해만</label>
+        <button class="log-settings-btn" id="l-settingsBtn" type="button" aria-label="로그 설정" title="로그 설정">⚙</button>
       </div>
     </section>
     <div class="log-list" id="l-list"></div>
+  </div>
 
-    <section class="log-data">
-      <h3>데이터 관리</h3>
-      <div class="log-data-actions">
-        <button class="log-btn" id="l-manageBtn">분류 관리</button>
-        <button class="log-btn" id="l-exportJson">JSON 백업</button>
-        <button class="log-btn" id="l-importJson">JSON 가져오기</button>
-        <input id="l-importFile" type="file" accept="application/json,.json" hidden>
-        <button class="log-btn" id="l-exportMd">MD 내보내기</button>
-        <button class="log-btn" id="l-exportCsv">CSV 내보내기</button>
-      </div>
-      <div class="log-manage" id="l-manage">
-        <h3>분류 관리</h3>
+  <div class="log-settings-back" id="l-settingsBack" aria-hidden="true">
+    <section class="log-settings-panel" role="dialog" aria-modal="true" aria-labelledby="l-settingsTitle">
+      <div class="log-settings-head"><h3 id="l-settingsTitle">데이터 관리</h3><button class="log-btn log-settings-close" id="l-settingsClose" type="button">×</button></div>
+      <div class="log-manage log-manage-always" id="l-manage">
+        <h3>컨셉 분류</h3>
         <div class="log-cat-list" id="l-catList"></div>
-        <div class="log-addcat"><input id="l-newCat" type="text" maxlength="30" placeholder="새 분류"><button class="log-btn" id="l-addCat">추가</button></div>
+        <div class="log-addcat"><input id="l-newCat" type="text" maxlength="30" placeholder="새 분류"><button class="log-btn log-action-accent" id="l-addCat">추가</button></div>
+      </div>
+      <div class="log-data-actions log-data-primary">
+        <button class="log-btn log-action-accent" id="l-exportJson">백업</button>
+        <button class="log-btn log-action-accent" id="l-importJson">복원</button>
+        <button class="log-btn danger-outline" id="l-resetLog">초기화</button>
+        <input id="l-importFile" type="file" accept="application/json,.json" hidden>
+      </div>
+      <div class="log-data-actions log-data-export">
+        <button class="log-btn log-action-soft" id="l-exportMd">MD 내보내기</button>
+        <button class="log-btn log-action-soft" id="l-exportCsv">CSV 내보내기</button>
       </div>
     </section>
   </div>
@@ -2378,24 +2433,29 @@ function render(){
  const list=filtered();
  $("l-list").innerHTML=list.length?list.map(e=>`<article class="log-entry" data-edit="${esc(e.id)}"><div class="log-entry-head"><span>${esc(e.date)}</span><span class="log-cat">[${esc(catName(e.categoryId))}]</span>${e.ai?'<span class="log-ai-mark">(AI)</span>':''}<span class="log-entry-actions"><button data-editbtn="${esc(e.id)}">수정</button><button data-del="${esc(e.id)}">삭제</button></span></div><div class="log-text">${esc(e.text)}</div></article>`).join(""):'<div class="log-empty">아직 기록이 없습니다.</div>';
 }
-function resetForm(){editing=null;$("l-date").value=today();$("l-ai").checked=false;$("l-text").value="";$("l-save").textContent="기록";$("l-cancel").style.display="none"}
-function edit(id){const e=entries.find(x=>x.id===id);if(!e)return;editing=id;$("l-date").value=e.date;$("l-category").value=e.categoryId;$("l-ai").checked=!!e.ai;$("l-text").value=e.text;$("l-save").textContent="수정 저장";$("l-cancel").style.display="inline-block";$("l-text").focus();window.scrollTo({top:0,behavior:"smooth"})}
-function saveEntry(){const text=$("l-text").value.trim();if(!text){status("내용을 입력해 주세요.");$("l-text").focus();return}const obj={date:$("l-date").value||today(),categoryId:$("l-category").value,ai:$("l-ai").checked,text,updatedAt:Date.now()};if(editing){const i=entries.findIndex(e=>e.id===editing);if(i>=0)entries[i]={...entries[i],...obj};status("수정했습니다.")}else{entries.push({id:uid(),createdAt:Date.now(),...obj});status("기록했습니다.")}saveAll();resetForm();render()}
+let autoSaveTimer=null, autoSaving=false;
+function resetForm(){editing=null;$("l-date").value=today();$("l-ai").checked=false;$("l-text").value="";$("l-cancel").style.display="none";status("내용을 입력하면 자동으로 저장됩니다.")}
+function edit(id){const e=entries.find(x=>x.id===id);if(!e)return;editing=id;$("l-date").value=e.date;$("l-category").value=e.categoryId;$("l-ai").checked=!!e.ai;$("l-text").value=e.text;$("l-cancel").style.display="inline-block";$("l-text").focus();window.scrollTo({top:0,behavior:"smooth"})}
+function autoSaveEntry(){if(autoSaving)return;const text=$("l-text").value.trim();if(!text){if(editing){editing=null;$("l-cancel").style.display="none"}status("내용을 입력하면 자동으로 저장됩니다.");return}autoSaving=true;const obj={date:$("l-date").value||today(),categoryId:$("l-category").value,ai:$("l-ai").checked,text,updatedAt:Date.now()};if(editing){const i=entries.findIndex(e=>e.id===editing);if(i>=0)entries[i]={...entries[i],...obj};else editing=null}if(!editing){const id=uid();entries.push({id,createdAt:Date.now(),...obj});editing=id;$("l-cancel").style.display="inline-block"}saveAll();render();status("자동 저장됨");autoSaving=false}
+function scheduleAutoSave(){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(autoSaveEntry,450)}
 function download(name,type,text){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function exportJson(){download(`LOG_${today()}.json`,"application/json;charset=utf-8",JSON.stringify({app:"LOG",version:1,exportedAt:new Date().toISOString(),categories,entries,settings},null,2))}
 function exportMd(){const a=[...entries].sort((x,y)=>String(x.date).localeCompare(String(y.date))||((x.createdAt||0)-(y.createdAt||0)));let out="",last="";for(const e of a){if(e.date!==last){if(out)out+="\n";out+=`### ${e.date}\n\n`;last=e.date}out+=`[${catName(e.categoryId)}] ${String(e.text).trim()}${e.ai?" (AI)":""}\n\n`}download(`LOG_${today()}.md`,"text/markdown;charset=utf-8",out.trimEnd()+"\n")}
 function csvCell(v){v=String(v??"");return /[\",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
 function exportCsv(){const old=confirm("CSV를 오래된 날짜부터 정렬해서 내보낼까요?\n\n확인: 오래된순 / 취소: 최신순");const a=[...entries].sort((x,y)=>{const d=String(x.date).localeCompare(String(y.date))||((x.createdAt||0)-(y.createdAt||0));return old?d:-d});const rows=[["날짜","분류","내용","AI"],...a.map(e=>[e.date,catName(e.categoryId),e.text,e.ai?"AI":""])];download(`LOG_${today()}.csv`,"text/csv;charset=utf-8","\ufeff"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n"))}
 function importJson(file){const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(String(r.result).replace(/^\ufeff/,"").trim());if(!j||j.app!=="LOG"||!Array.isArray(j.categories)||!Array.isArray(j.entries))throw 0;if(!confirm("현재 LOG 기록과 분류를 백업 파일의 내용으로 교체할까요?"))return;categories=j.categories.filter(c=>c&&c.id&&String(c.name||"").trim()).map(c=>({id:String(c.id),name:String(c.name).trim()}));entries=j.entries.filter(e=>e&&e.id&&e.date&&e.categoryId&&typeof e.text==="string");settings=j.settings&&typeof j.settings==="object"?j.settings:{};if(!categories.length)throw 0;saveAll();renderCats();resetForm();$("l-thisYear").checked=settings.thisYear!==false;render();status("LOG 백업을 불러왔습니다.")}catch(e){alert("LOG JSON 파일 형식을 확인해 주세요.")}};r.onerror=()=>alert("파일을 읽는 중 오류가 발생했습니다.");r.readAsText(file)}
-$("l-save").onclick=saveEntry;$("l-cancel").onclick=resetForm;$("l-text").addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();saveEntry()}});
+$("l-cancel").onclick=resetForm;$("l-text").addEventListener("input",scheduleAutoSave);["l-date","l-category","l-ai"].forEach(id=>$(id).addEventListener("change",scheduleAutoSave));
 ["l-search","l-filterCat","l-filterAI","l-sort"].forEach(id=>$(id).addEventListener(id==="l-search"?"input":"change",render));
 $("l-thisYear").checked=settings.thisYear!==false;$("l-thisYear").addEventListener("change",()=>{settings.thisYear=$("l-thisYear").checked;saveAll();render()});
 $("l-list").onclick=e=>{const del=e.target.closest("[data-del]");if(del){e.stopPropagation();const id=del.dataset.del;if(confirm("이 기록을 삭제할까요?")){entries=entries.filter(x=>x.id!==id);saveAll();if(editing===id)resetForm();render()}return}const ed=e.target.closest("[data-editbtn]")||e.target.closest("[data-edit]");if(ed)edit(ed.dataset.editbtn||ed.dataset.edit)};
-$("l-manageBtn").onclick=()=>$("l-manage").classList.toggle("open");
 $("l-addCat").onclick=()=>{const n=$("l-newCat").value.trim();if(!n)return;if(categories.some(c=>c.name===n)){status("이미 있는 분류입니다.");return}categories.push({id:uid(),name:n});$("l-newCat").value="";saveAll();renderCats();render()};
 $("l-catList").addEventListener("change",e=>{if(!e.target.matches("[data-catname]"))return;const c=categories.find(x=>x.id===e.target.dataset.catname),n=e.target.value.trim();if(!c||!n){renderCats();return}if(categories.some(x=>x.id!==c.id&&x.name===n)){alert("같은 이름의 분류가 이미 있습니다.");renderCats();return}c.name=n;saveAll();renderCats();render()});
 $("l-catList").addEventListener("click",e=>{const b=e.target.closest("[data-catdel]");if(!b)return;const id=b.dataset.catdel;if(entries.some(x=>x.categoryId===id)){alert("이 분류를 사용하는 기록이 있습니다. 먼저 해당 기록의 분류를 바꿔 주세요.");return}if(categories.length<=1){alert("분류는 하나 이상 필요합니다.");return}if(confirm("이 분류를 삭제할까요?")){categories=categories.filter(x=>x.id!==id);saveAll();renderCats();render()}});
 $("l-exportJson").onclick=exportJson;$("l-exportMd").onclick=exportMd;$("l-exportCsv").onclick=exportCsv;$("l-importJson").onclick=()=>$("l-importFile").click();$("l-importFile").onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)importJson(f);e.target.value=""};
+function openLogSettings(){$("l-settingsBack").classList.add("open");$("l-settingsBack").setAttribute("aria-hidden","false")}
+function closeLogSettings(){$("l-settingsBack").classList.remove("open");$("l-settingsBack").setAttribute("aria-hidden","true");$("l-manage").classList.remove("open")}
+$("l-settingsBtn").onclick=openLogSettings;$("l-settingsClose").onclick=closeLogSettings;$("l-settingsBack").addEventListener("click",e=>{if(e.target===$("l-settingsBack"))closeLogSettings()});
+$("l-resetLog").onclick=()=>{if(!entries.length){status("삭제할 LOG 기록이 없습니다.");closeLogSettings();return}if(confirm("LOG 탭에 기록된 데이터를 전부 삭제할까요?\n\nCONCEPT, Q&A, SELECT 데이터에는 영향을 주지 않습니다.")){entries=[];localStorage.setItem(ENTRY_KEY,"[]");editing=null;resetForm();render();closeLogSettings();status("LOG 기록을 초기화했습니다.")}};
 renderCats();resetForm();render();
 })();
 </script>
