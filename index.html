@@ -546,9 +546,9 @@ html,body{background:#eee9dc}
 #s-module header{display:none}
 #s-module .card{background:#fbf8ef;box-shadow:0 12px 34px rgba(74,68,53,.07)}
 #s-module .select-decision-card{position:relative;padding:18px 20px 20px}
-#s-module .select-gear{position:absolute;right:14px;top:14px;z-index:3;width:34px;height:34px;border:1px solid var(--line);border-radius:11px;background:#f5f1e6;color:#68685f;font-size:17px;line-height:1}
+#s-module .select-gear{width:32px;height:32px;border:1px solid var(--line);border-radius:10px;background:#f5f1e6;color:#68685f;font-size:16px;line-height:1}
 #s-module .select-gear:hover,#s-module .items-edit:hover{background:#e8eadf;color:#4f5d48}
-#s-module .select-mode-segment{width:min(430px,calc(100% - 46px));margin:0 auto 4px}
+#s-module .select-mode-segment{width:min(430px,100%);margin:0 auto 4px}
 #s-module .segment{background:#ece8dc;border-color:#d7cfbd}
 #s-module .segment .mode{color:#6e6b62}
 #s-module .segment .mode.active{background:#fbf8ef;color:#536049;box-shadow:0 3px 12px rgba(72,75,61,.08)}
@@ -559,7 +559,7 @@ html,body{background:#eee9dc}
 #s-module #s-pickBtn{background:#65715a!important;border-color:#65715a!important;color:#fffdf7!important;box-shadow:0 7px 18px rgba(76,91,67,.15)!important}
 #s-module #s-pickBtn:hover{background:#536049!important;border-color:#536049!important}
 #s-module .items-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-#s-module .items-head h2{margin:0}
+#s-module .items-head h2{margin:0}#s-module .items-head-actions{display:flex;align-items:center;gap:6px}
 #s-module .items-edit{width:32px;height:32px;border:1px solid var(--line);border-radius:10px;background:#f5f1e6;color:#68685f;font-size:16px}
 #s-module .item{background:#f7f3e9}
 #s-module .item.removed{background:#ebe8df;color:#a29d91}
@@ -577,8 +577,7 @@ html,body{background:#eee9dc}
 
 @media(max-width:620px){
  #s-module .select-decision-card{padding:15px 14px 17px}
- #s-module .select-gear{right:10px;top:10px}
- #s-module .select-mode-segment{width:min(300px,calc(100% - 64px));margin-left:auto;margin-right:auto}
+ #s-module .select-mode-segment{width:min(300px,100%);margin-left:auto;margin-right:auto}
  #s-module .segment .mode{padding-left:8px;padding-right:8px}
  #s-module .segment .mode .desc{display:none}
  #s-module .hero-card .big-result{min-height:155px}
@@ -703,7 +702,6 @@ html,body{background:#eee9dc}
 </header>
 
 <section class="card hero-card select-decision-card">
-<button class="select-gear" id="s-manageSets" type="button" aria-label="세트 관리" title="세트 관리">⚙</button>
 <div class="segment select-mode-segment">
 <button class="mode active" id="s-modeRandom"><div class="title">랜덤 선택</div><div class="desc">전체 항목에서 매번 무작위로 선택합니다.</div></button>
 <button class="mode" id="s-modeRemove"><div class="title">하나씩 제거</div><div class="desc">뽑힌 항목을 제거하고 마지막 1개까지 이어갑니다.</div></button>
@@ -722,7 +720,7 @@ html,body{background:#eee9dc}
 </section>
 
 <section class="card items-card">
-<div class="items-head"><h2>현재 항목 <span id="s-itemCount" class="counter"></span></h2><button class="items-edit" id="s-editItems" type="button" aria-label="현재 항목 수정" title="현재 항목 수정">✎</button></div>
+<div class="items-head"><h2>현재 항목 <span id="s-itemCount" class="counter"></span></h2><div class="items-head-actions"><button class="items-edit" id="s-editItems" type="button" aria-label="현재 항목 수정" title="현재 항목 수정">✎</button><button class="select-gear" id="s-manageSets" type="button" aria-label="세트 관리" title="세트 관리">⚙</button></div></div>
 <div id="s-items" class="items"></div>
 </section>
 
