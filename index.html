@@ -620,6 +620,26 @@ html,body{background:#eee9dc}
 #q-module button,#s-module button{transition:transform .14s ease,background-color .14s ease,border-color .14s ease,box-shadow .14s ease,filter .14s ease;cursor:pointer}#q-module button:hover,#s-module button:hover{transform:translateY(-1px);filter:brightness(.97);box-shadow:0 4px 10px rgba(74,55,39,.08)}#q-module button:active,#s-module button:active{transform:translateY(0) scale(.985);box-shadow:none}
 @media(max-width:700px){#t-module .tarot-app{width:calc(100% - 18px);padding:12px 0 42px}#t-module .tarot-stage{padding:11px;border-radius:16px}#t-module .tarot-result{grid-template-columns:1fr;gap:13px}#t-module .tarot-card{min-height:360px}#t-module .tarot-image{max-height:350px}#t-module .tarot-name{font-size:24px}#t-module .tarot-actions{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 94px 48px;gap:7px}#t-module .tarot-help{width:48px;min-width:48px}#t-module .tarot-modal-back{padding:8px;align-items:flex-end}#t-module .tarot-modal{border-radius:18px 18px 0 0;max-height:92vh;padding:13px}#t-module .tarot-modal-head{top:-13px}#t-module .guide-intro,#t-module .guide-cards{grid-template-columns:1fr}#t-module .guide-card{grid-template-columns:62px 1fr}#t-module .guide-card img{width:62px;height:107px}}
 </style>
+
+<style id="concept-select-toggle-mobile-fix">
+#c-module .c-selection-top{display:flex;align-items:center;gap:8px;min-width:0}
+#c-module .c-selection-top.hidden{display:none}
+#c-module .c-selection-top strong{white-space:nowrap;color:var(--muted);font-size:13px}
+#c-module .c-select-toggle{height:38px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--text);font-weight:800;white-space:nowrap;transition:background .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease,transform .15s ease}
+#c-module .c-select-toggle.active{background:var(--accent);border-color:var(--accent);color:#fffdf7;box-shadow:0 4px 12px rgba(101,113,90,.20)}
+@media(hover:hover) and (pointer:fine){#c-module .c-select-toggle:hover{transform:translateY(-1px)}#c-module .c-select-toggle.active:hover{background:var(--accent-hover);border-color:var(--accent-hover)}}
+#c-module .c-select-toggle:active{transform:scale(.98)}
+@media(max-width:800px){
+ #c-module .toolbar{gap:6px}
+ #c-module .c-selection-top{gap:5px;flex:0 0 auto}
+ #c-module .c-selection-top strong{font-size:12px}
+ #c-module .c-select-toggle{height:36px;padding:0 9px;font-size:12px;border-radius:10px}
+}
+@media(max-width:620px){
+ #s-module .segment{width:96%;margin-left:auto;margin-right:auto}
+ #s-module .segment .mode{padding-left:9px;padding-right:9px}
+}
+</style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
@@ -629,7 +649,7 @@ html,body{background:#eee9dc}
 <div class="app">
 <main class="hero">
 <div class="toolbar">
-    <div id="c-selectionTop" class="c-selection-top hidden"><strong id="c-selectionCount">0/0</strong><button type="button" onclick="selectAll()">전체 선택</button><button type="button" onclick="clearSelection()">전체 해제</button></div>
+    <div id="c-selectionTop" class="c-selection-top hidden"><strong id="c-selectionCount">0/0</strong><button id="c-selectAllToggle" class="c-select-toggle" type="button" onclick="toggleSelectAll()" aria-pressed="false">전체 선택</button></div>
     <div class="actions concept-toolbar-actions">
       <button class="btn concept-utility" onclick="openSaved()">즐겨찾기</button>
       <button class="btn concept-utility" onclick="openSettings()">설정</button>
@@ -1018,12 +1038,16 @@ function c_render(){
  const top=document.getElementById("c-selectionTop");
  top.classList.remove("hidden");
  document.getElementById("c-selectionCount").textContent=`${selectedKeys.size}/${keys.length}`;
+ const allToggle=document.getElementById("c-selectAllToggle");
+ const allSelected=keys.length>0&&selectedKeys.size===keys.length;
+ if(allToggle){allToggle.classList.toggle("active",allSelected);allToggle.setAttribute("aria-pressed",String(allSelected));}
  const fb=document.getElementById("c-feedback");fb.classList.remove("hidden");
  fb.innerHTML=`<button class="btn" onclick="saveCurrent()">즐겨찾기 추가</button><button class="btn primary" onclick="openPrompt()">발전시키기</button>`
 }
 function toggleCard(k){if(selectedKeys.has(k))selectedKeys.delete(k);else selectedKeys.add(k);c_render()}
 function selectAll(){if(!current)return;selectedKeys=new Set(Object.keys(current).filter(k=>LABELS[k]&&current[k]));c_render()}
 function clearSelection(){selectedKeys.clear();c_render()}
+function toggleSelectAll(){if(!current)return;const keys=Object.keys(current).filter(k=>LABELS[k]&&current[k]);if(keys.length&&selectedKeys.size===keys.length)clearSelection();else selectAll()}
 function swapOne(k){
  if(!current||!data[k]||!data[k].length)return;
  const used=Object.entries(current).filter(([key])=>key!==k&&LABELS[key]).map(x=>x[1]);
