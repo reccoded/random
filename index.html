@@ -7,7 +7,7 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#eee6d8;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
 .random-nav{position:sticky;top:0;z-index:99999;background:#fffaf1;border-bottom:1px solid #d8c9b4;padding:max(7px,env(safe-area-inset-top)) 10px 7px}
 .random-row{max-width:1440px;margin:auto;display:flex;align-items:center;gap:12px}.random-brand{font-weight:950;color:#2b241d;white-space:nowrap}.random-tabs{margin-left:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:min(600px,100%)}
-.random-tab{border:1px solid #d8c9b4;border-radius:10px;background:#f7efdf;color:#2b241d;padding:8px 11px;font:inherit;font-size:12px;font-weight:850}.random-tab.active{background:#6d4935;border-color:#6d4935;color:#fffaf2}
+.random-tab{border:1px solid #d8c9b4;border-radius:10px;background:#f7efdf;color:#2b241d;padding:8px 11px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;transition:transform .14s ease,background .14s ease,border-color .14s ease,box-shadow .14s ease}.random-tab:hover{background:#eee1ce;border-color:#bda58a;transform:translateY(-1px);box-shadow:0 4px 10px rgba(74,55,39,.08)}.random-tab:active{transform:translateY(0) scale(.98)}.random-tab.active{background:#6d4935;border-color:#6d4935;color:#fffaf2}
 .random-module{display:none}.random-module.active{display:block}
 @media(max-width:560px){.random-row{display:block}.random-brand{display:block;text-align:center;height:27px;font-size:13px}.random-tabs{width:100%;margin:3px 0 0;gap:4px;grid-template-columns:repeat(4,minmax(0,1fr))}.random-tab{padding:7px 2px;font-size:11px;white-space:nowrap}}
 </style>
@@ -456,129 +456,12 @@ body:not(.concept-active) .concept-nav-actions{display:none}
 #s-module header h1{display:none !important;}
 </style>
 
-<style id="random-log-v1">
-/* CONCEPT compact selection controls */
-#c-module .c-selection-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:13px}
-#c-module .c-selection-top.hidden{display:none!important}
-#c-module .c-selection-top strong{color:var(--text);font-size:14px;min-width:34px}
-#c-module .c-selection-top button{border:1px solid var(--line);background:#fffdf8;color:var(--text);border-radius:9px;padding:7px 10px;font:inherit;cursor:pointer}
-#c-module .c-selection-top button:hover{background:var(--panel2)}
-/* SELECT primary action gets its own warm accent */
-#s-module #s-pickBtn{background:#e57a3f!important;border-color:#e57a3f!important;color:#fff!important;box-shadow:0 5px 16px rgba(120,65,30,.14)}
-#s-module #s-pickBtn:hover{background:#cf6833!important;border-color:#cf6833!important}
-#s-module #s-pickBtn:disabled{opacity:.55}
-/* LOG */
-#l-module{--lbg:#f5efe4;--lpanel:#fffaf2;--lline:#d9cebd;--ltext:#292824;--lmuted:#777064;--laccent:#557985;--ldanger:#a75249}
-#l-module .log-app{max-width:900px;margin:0 auto;padding:20px 18px 60px;color:var(--ltext)}
-#l-module .log-compose,#l-module .log-tools,#l-module .log-entry,#l-module .log-manage{background:var(--lpanel);border:1px solid var(--lline);border-radius:16px}
-#l-module .log-compose{padding:16px;margin-bottom:13px}
-#l-module .log-meta{display:grid;grid-template-columns:170px minmax(150px,1fr) auto;gap:9px;align-items:end;margin-bottom:10px}
-#l-module label{display:block;font-size:12px;font-weight:700;color:var(--lmuted);margin:0 0 5px}
-#l-module input[type=date],#l-module select,#l-module input[type=search],#l-module input[type=text],#l-module textarea{width:100%;box-sizing:border-box;border:1px solid var(--lline);border-radius:10px;background:#fffdf8;color:var(--ltext);font:inherit;padding:10px 11px;outline:none}
-#l-module input:focus,#l-module select:focus,#l-module textarea:focus{border-color:var(--laccent);box-shadow:0 0 0 2px rgba(85,121,133,.10)}
-#l-module textarea{min-height:96px;resize:vertical;line-height:1.55;font-size:16px}
-#l-module .log-ai{height:42px;display:flex;align-items:center;gap:7px;padding:0 10px;border:1px solid var(--lline);border-radius:10px;background:#fffdf8;white-space:nowrap;font-weight:700;font-size:14px}
-#l-module .log-ai input{width:18px;height:18px;accent-color:var(--laccent)}
-#l-module .log-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
-#l-module .log-btn{border:1px solid var(--lline);border-radius:10px;background:#fffdf8;color:var(--ltext);padding:9px 12px;font:inherit;font-weight:700;cursor:pointer}
-#l-module .log-btn.primary{background:var(--laccent);border-color:var(--laccent);color:white}
-#l-module #l-save{background:#6d4935;border-color:#6d4935;color:#fffaf2;min-width:92px}
-#l-module #l-save:hover{background:#583a2b;border-color:#583a2b}
-#l-module .log-year-toggle{display:flex;align-items:center;gap:7px;height:42px;padding:0 10px;border:1px solid var(--lline);border-radius:10px;background:#fffdf8;font-size:13px;font-weight:800;color:var(--ltext);white-space:nowrap}
-#l-module .log-year-toggle input{width:17px;height:17px;accent-color:var(--laccent)}
-#l-module .log-data{margin-top:18px;padding:14px;background:var(--lpanel);border:1px solid var(--lline);border-radius:16px}
-#l-module .log-data h3{margin:0 0 10px;font-size:14px;color:var(--lmuted)}
-#l-module .log-data-actions{display:flex;gap:7px;flex-wrap:wrap}
-#l-module .log-btn.danger{color:var(--ldanger)}
-#l-module .log-tools{padding:12px;margin-bottom:13px}
-#l-module .log-filter-row{display:grid;grid-template-columns:minmax(160px,1fr) 140px 120px 130px auto;gap:8px}
-#l-module .log-subtools{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
-#l-module .log-list{display:grid;gap:9px}
-#l-module .log-entry{padding:13px 14px;cursor:pointer}
-#l-module .log-entry:hover{border-color:#b9ab96}
-#l-module .log-entry-head{display:flex;gap:7px;align-items:center;flex-wrap:wrap;color:var(--lmuted);font-size:12px;margin-bottom:6px}
-#l-module .log-cat{font-weight:800;color:var(--laccent)}
-#l-module .log-ai-mark{font-weight:800;color:#8b5a47}
-#l-module .log-text{white-space:pre-wrap;word-break:break-word;line-height:1.55;font-size:15px}
-#l-module .log-entry-actions{display:flex;gap:5px;margin-left:auto}
-#l-module .log-entry-actions button{border:0;background:transparent;color:var(--lmuted);padding:3px 5px;cursor:pointer;font-size:12px}
-#l-module .log-empty{text-align:center;color:var(--lmuted);padding:34px 12px}
-#l-module .log-manage{padding:14px;margin-top:12px;display:none}
-#l-module .log-manage.open{display:block}
-#l-module .log-manage h3{margin:0 0 10px;font-size:15px}
-#l-module .log-cat-list{display:grid;gap:7px;margin-bottom:10px}
-#l-module .log-cat-row{display:flex;gap:7px;align-items:center}
-#l-module .log-cat-row input{flex:1}
-#l-module .log-addcat{display:flex;gap:7px}
-#l-module .log-addcat input{flex:1}
-#l-module .log-status{min-height:18px;margin:7px 2px 0;color:var(--lmuted);font-size:12px}
-@media(max-width:700px){
- #c-module .toolbar{align-items:center!important}
- #c-module .c-selection-top{gap:5px}
- #c-module .c-selection-top button{padding:6px 8px;font-size:12px}
- #l-module .log-app{padding:11px 9px 45px}
- #l-module .log-compose{padding:11px;border-radius:13px}
- #l-module .log-meta{grid-template-columns:minmax(132px,1.55fr) minmax(74px,.85fr) auto;gap:6px;align-items:end}
- #l-module .log-meta>div{min-width:0}
- #l-module .log-meta input[type=date], #l-module .log-meta select{width:100%;min-width:0;padding-left:7px;padding-right:7px}
- #l-module .log-ai{height:40px;align-self:end;padding:0 8px;gap:5px}
- #l-module textarea{min-height:88px}
- #l-module .log-filter-row{grid-template-columns:1fr 1fr}
- #l-module .log-filter-row input[type=search]{grid-column:1/-1}
- #l-module .log-year-toggle{justify-content:center}
- #l-module .log-tools{padding:9px;border-radius:13px}
- #l-module .log-entry{padding:11px 12px;border-radius:13px}
- #l-module .log-entry-actions{margin-left:0;width:100%;justify-content:flex-end}
- #l-module .log-btn{padding:9px 10px}
- #l-module .log-ai{height:42px;align-self:end;padding:0 10px;gap:7px;margin-bottom:0}
- #l-module .log-year-toggle{height:42px;min-height:42px;box-sizing:border-box;margin:0;padding:0 10px}
-}
-
-/* LOG control alignment fix: AI / 올해만 */
-#l-module .log-ai,
-#l-module .log-year-toggle{box-sizing:border-box;margin-bottom:0}
-#l-module .log-ai{align-self:end}
-#l-module .log-year-toggle{min-height:42px}
-</style>
-
 <style id="random-pc-wide-concept-log">
-/* PC wide layout: CONCEPT + LOG only. Mobile remains unchanged. */
+/* PC wide layout: CONCEPT. */
 @media (min-width:901px){
-  #c-module.active,
-  #l-module.active{
-    width:min(96vw,2220px);
-    max-width:min(96vw,2220px);
-    margin-left:50%;
-    transform:translateX(-50%);
-  }
-
-  #c-module .app{
-    max-width:none;
-    width:100%;
-  }
-  #c-module .c-results{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-
-  #l-module .log-app{
-    width:100%;
-    max-width:none;
-  }
-  #l-module .log-list{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:12px;
-  }
-  #l-module .log-entry{
-    min-width:0;
-    overflow-wrap:anywhere;
-  }
-}
-@media (min-width:1200px) and (max-width:1599px){
-  #l-module .log-list{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@media (min-width:901px) and (max-width:1199px){
-  #l-module .log-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #c-module.active{width:min(96vw,2220px);max-width:min(96vw,2220px);margin-left:50%;transform:translateX(-50%)}
+  #c-module .app{max-width:none;width:100%}
+  #c-module .c-results{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 </style>
 
@@ -632,21 +515,6 @@ body:not(.concept-active) .concept-nav-actions{display:none}
   .random-row{
     max-width:min(96vw,2220px) !important;
     width:min(96vw,2220px) !important;
-  }
-}
-</style>
-
-
-<style id="random-log-data-compact-pc">
-@media (min-width:901px){
-  #l-module .log-data{
-    width:max-content !important;
-    max-width:100% !important;
-    justify-self:start;
-  }
-  #l-module .log-data-actions{
-    width:max-content !important;
-    max-width:100% !important;
   }
 }
 </style>
@@ -707,28 +575,6 @@ html,body{background:#eee9dc}
 #s-module .input,#s-module .select{background:#fffdf7;border-color:#d7cfbd}
 #s-module .input:focus,#s-module .select:focus{border-color:#7c8870;box-shadow:0 0 0 3px rgba(101,113,90,.10)}
 
-#l-module{--lbg:#eee9dc;--lpanel:#fbf8ef;--lline:#d7cfbd;--ltext:#302f29;--lmuted:#716f65;--laccent:#65715a;--ldanger:#a75249}
-#l-module .log-btn.primary{background:#65715a;border-color:#65715a;color:#fffdf7}
-#l-module .log-btn.primary:hover{background:#536049;border-color:#536049}
-#l-module input:focus,#l-module select:focus,#l-module textarea:focus{border-color:#7c8870;box-shadow:0 0 0 3px rgba(101,113,90,.10)}
-#l-module .log-cat{color:#65715a}
-#l-module .log-ai-mark{color:#65715a}
-#l-module .log-compose,#l-module .log-tools,#l-module .log-entry{box-shadow:none}
-#l-module .log-search-wrap{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:7px}
-#l-module .log-settings-btn{width:38px;height:42px;padding:0;border:1px solid var(--lline);border-radius:10px;background:#f3efe4;color:#60675a;font-size:17px;cursor:pointer}
-#l-module .log-settings-btn:hover{background:#e7eadf;color:#4f5d48}
-#l-module .log-settings-back{display:none;position:fixed;inset:0;z-index:10020;background:rgba(40,39,34,.35);padding:18px;align-items:center;justify-content:center}
-#l-module .log-settings-back.open{display:flex}
-#l-module .log-settings-panel{width:min(560px,100%);max-height:min(82vh,720px);overflow:auto;background:#fbf8ef;border:1px solid #d7cfbd;border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(48,47,41,.16)}
-#l-module .log-settings-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
-#l-module .log-settings-head h3{margin:0;font-size:17px}
-#l-module .log-settings-close{width:34px;height:34px;padding:0}
-#l-module .log-data-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-#l-module .log-data-actions .log-btn{width:100%}
-#l-module .log-btn.danger-outline{background:transparent;border-color:#b45a52;color:#a8423a}
-#l-module .log-btn.danger-outline:hover{background:#fff1ef}
-#l-module .log-manage{margin-top:12px;background:#f5f1e7;border:1px solid var(--lline);border-radius:12px}
-#l-module .log-autosave-note{min-height:18px;margin:7px 2px 0;color:var(--lmuted);font-size:12px}
 @media(max-width:620px){
  #s-module .select-decision-card{padding:15px 14px 17px}
  #s-module .select-gear{right:10px;top:10px}
@@ -736,41 +582,48 @@ html,body{background:#eee9dc}
  #s-module .segment .mode{padding-left:8px;padding-right:8px}
  #s-module .segment .mode .desc{display:none}
  #s-module .hero-card .big-result{min-height:155px}
- #l-module .log-filter-row{grid-template-columns:1fr 1fr}
- #l-module .log-search-wrap{grid-column:1/-1}
- #l-module .log-filter-row input[type=search]{grid-column:auto}
- #l-module .log-settings-back{padding:10px}
- #l-module .log-settings-panel{padding:13px;border-radius:15px}
- #l-module .log-data-actions{grid-template-columns:1fr 1fr}
  #s-module .set-card{flex-direction:row;align-items:center}
  #s-module .set-actions{width:auto;display:flex;grid-template-columns:none}
 }
 </style>
-<style id="log-settings-finish-v2">
-#l-module .log-filter-row{grid-template-columns:minmax(150px,.9fr) 140px 120px 130px auto 40px;align-items:center}
-#l-module .log-filter-row>#l-search{min-width:0}
-#l-module .log-settings-btn{justify-self:end;width:40px;height:40px;border:1px solid #bfc7b8;border-radius:11px;background:#edf0e7;color:#53604d;transition:.16s ease}
-#l-module .log-settings-btn:hover{background:#dfe6d7;border-color:#8f9c84;color:#46523f;transform:translateY(-1px);box-shadow:0 4px 10px rgba(78,91,70,.10)}
-#l-module .log-settings-panel{width:min(590px,100%)}
-#l-module .log-manage.log-manage-always{display:block;margin:0 0 14px;padding:14px;background:#f5f2e9;border:1px solid #d7cfbd;border-radius:13px}
-#l-module .log-manage.log-manage-always h3{color:#4f5d48}
-#l-module .log-data-actions{display:grid;gap:9px;margin-top:9px}
-#l-module .log-data-primary{grid-template-columns:repeat(3,minmax(0,1fr))}
-#l-module .log-data-export{grid-template-columns:repeat(2,minmax(0,1fr))}
-#l-module .log-data-actions .log-btn{width:100%;min-height:42px;border-radius:11px;font-weight:750;transition:.16s ease}
-#l-module .log-data-actions .log-btn:hover,#l-module .log-addcat .log-btn:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(72,82,65,.10)}
-#l-module .log-action-accent{background:#e6ebdf;border-color:#aebaa4;color:#4b5945}
-#l-module .log-action-accent:hover{background:#d8e1d0;border-color:#899a7d;color:#3f4d39}
-#l-module .log-action-soft{background:#f1eee4;border-color:#cec7b8;color:#5f6258}
-#l-module .log-action-soft:hover{background:#e7e4d8;border-color:#afa897;color:#4e5249}
-#l-module .log-btn.danger-outline{background:#fffaf8;border-color:#c56c63;color:#a8423a}
-#l-module .log-btn.danger-outline:hover{background:#fff0ed;border-color:#ad4e46;color:#963b34}
-@media(max-width:620px){#l-module .log-filter-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 40px}#l-module .log-filter-row>#l-search{grid-column:1/3}#l-module .log-filter-row>#l-filterCat{grid-column:1/2}#l-module .log-filter-row>#l-filterAI{grid-column:2/3}#l-module .log-filter-row>#l-sort{grid-column:1/2}#l-module .log-filter-row>.log-year-toggle{grid-column:2/3}#l-module .log-filter-row>#l-settingsBtn{grid-column:3;grid-row:1;justify-self:end}#l-module .log-data-primary{grid-template-columns:repeat(3,minmax(0,1fr))}#l-module .log-data-export{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+<style id="random-tarot-v2">
+#t-module{--tbg:#eee6d8;--tpanel:#fffaf1;--tline:#d8c9b4;--ttext:#2b241d;--tmuted:#756b60;--taccent:#6d4935;--tgreen:#586b52;background:var(--tbg);color:var(--ttext)}
+#t-module .tarot-app{width:min(980px,calc(100% - 28px));margin:0 auto;padding:24px 0 60px;position:relative}
+#t-module .tarot-help{width:48px;height:48px;border:1px solid var(--tline);border-radius:12px;background:#f7efdf;color:#586252;font-size:17px;font-weight:950;cursor:pointer;transition:.14s ease}
+#t-module .tarot-help:hover,#t-module .tarot-close:hover{background:#e9dfcf;transform:translateY(-1px);box-shadow:0 4px 12px rgba(74,55,39,.09)}
+#t-module .tarot-stage{background:var(--tpanel);border:1px solid var(--tline);border-radius:20px;padding:20px;box-shadow:0 8px 28px rgba(61,57,49,.05)}
+#t-module .tarot-result{display:grid;grid-template-columns:minmax(230px,320px) 1fr;gap:20px;align-items:start}
+#t-module .tarot-card{min-height:430px;border:1px solid #cfc5b2;border-radius:17px;background:linear-gradient(145deg,#fdfaf2,#f0eadc);display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;position:relative;overflow:hidden}
+#t-module .tarot-card.back:before{content:"✦";font-size:78px;color:#75806a}#t-module .tarot-card.back:after{content:"TAROT";position:absolute;bottom:30%;font-family:Georgia,serif;font-size:18px;letter-spacing:.24em;color:#756e62}
+#t-module .tarot-image{display:block;max-width:100%;width:auto;max-height:400px;border-radius:8px;box-shadow:0 8px 24px rgba(40,34,28,.16);transition:transform .2s ease}#t-module .tarot-image.reversed{transform:rotate(180deg)}
+#t-module .tarot-info{min-width:0}#t-module .tarot-type{font-size:11px;font-weight:900;letter-spacing:.13em;color:#77806d;text-transform:uppercase}
+#t-module .tarot-name{font-family:Georgia,"Times New Roman",serif;font-size:29px;font-weight:800;line-height:1.25;margin:8px 0 5px}#t-module .tarot-dir{font-size:12px;font-weight:900;color:#65715a}.tarot-keywords{margin:10px 0 14px;font-size:13px;line-height:1.7;color:#6f695e}
+#t-module .tarot-reading{display:grid;gap:9px}#t-module .reading-box{background:#f8f2e7;border:1px solid #ddd2bf;border-radius:13px;padding:12px 13px}#t-module .reading-label{font-size:11px;font-weight:950;color:#65715a;margin-bottom:5px;letter-spacing:.02em}#t-module .reading-text{font-size:13px;line-height:1.72;color:#4f4b43}
+#t-module .tarot-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 118px 48px;gap:9px;margin-top:14px;align-items:center}
+#t-module .tarot-draw,#t-module .tarot-next,#t-module .tarot-reverse-toggle{height:48px;border:0;border-radius:13px;font-weight:900;cursor:pointer;transition:.14s ease}
+#t-module .tarot-draw,#t-module .tarot-next{background:var(--taccent);color:#fffdf7;border:0;border-radius:13px;font-weight:900;cursor:pointer;transition:.14s ease}
+#t-module .tarot-draw:hover,#t-module .tarot-next:hover{background:#583a2b;transform:translateY(-1px);box-shadow:0 5px 14px rgba(74,55,39,.12)}
+#t-module .tarot-reverse-toggle{background:#ebe5d8;color:#6d675c;border:1px solid #ddd2bf}
+#t-module .tarot-reverse-toggle:hover{background:#e1d7c6;transform:translateY(-1px)}
+#t-module .tarot-reverse-toggle.active{background:#159447;color:#fff;border-color:#0d7f3a;box-shadow:0 5px 16px rgba(21,148,71,.30)}
+#t-module .tarot-reverse-toggle.active:hover{background:#0f7f3d}
+#t-module .tarot-options{display:none}
+#t-module .tarot-session{display:none;gap:8px;flex-wrap:wrap;margin:0 0 14px;padding:10px;background:#f8f2e7;border:1px solid #ddd2bf;border-radius:13px}#t-module .tarot-session.show{display:flex}#t-module .tarot-session-card{width:58px;text-align:center;font-size:10px;font-weight:800;color:#625e55}#t-module .tarot-session-card img{width:58px;height:100px;object-fit:cover;border-radius:5px;display:block;margin-bottom:4px;box-shadow:0 3px 9px rgba(40,34,28,.12)}#t-module .tarot-session-card img.rev{transform:rotate(180deg)}
+#t-module .tarot-modal-back{display:none;position:fixed;inset:0;z-index:10020;background:rgba(40,39,34,.42);padding:18px;align-items:center;justify-content:center}.tarot-modal-back.open{display:flex}
+#t-module .tarot-modal{width:min(1040px,100%);max-height:90vh;overflow:auto;background:#fbf8ef;border:1px solid var(--tline);border-radius:18px;padding:18px;box-shadow:0 18px 50px rgba(48,47,41,.18)}
+#t-module .tarot-modal-head{position:sticky;top:-18px;z-index:3;background:#fbf8ef;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #e2d8c7}#t-module .tarot-modal-head h3{margin:0;font-size:18px}.tarot-close{width:36px;height:36px;border:1px solid var(--tline);border-radius:10px;background:#f3eee1;cursor:pointer;transition:.14s ease}
+#t-module .guide-intro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}#t-module .guide-section{background:#f8f2e7;border:1px solid #ddd2bf;border-radius:13px;padding:13px}#t-module .guide-section h4{margin:0 0 7px;font-size:14px;color:#55604f}#t-module .guide-section p,#t-module .guide-section li{color:#625e55;font-size:12px;line-height:1.72}#t-module .guide-section ul{margin:5px 0 0;padding-left:18px}
+#t-module .guide-filter{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 10px}#t-module .guide-filter button{border:1px solid var(--tline);border-radius:9px;background:#f3eee1;padding:8px 10px;font-size:11px;font-weight:850;cursor:pointer;transition:.14s}#t-module .guide-filter button:hover,#t-module .guide-filter button.active{background:#ded3c1;border-color:#bca58a}
+#t-module .guide-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#t-module .guide-card{display:grid;grid-template-columns:72px 1fr;gap:10px;background:#fffdf8;border:1px solid #e0d5c4;border-radius:12px;padding:9px}#t-module .guide-card img{width:72px;height:124px;object-fit:cover;border-radius:5px;background:#eee}#t-module .guide-card h5{margin:1px 0 5px;font-size:13px}#t-module .guide-card p{margin:3px 0;font-size:11px;line-height:1.55;color:#625e55}#t-module .guide-card b{color:#55604f}
+/* Missing interaction polish across RANDOM */
+#q-module button,#s-module button{transition:transform .14s ease,background-color .14s ease,border-color .14s ease,box-shadow .14s ease,filter .14s ease;cursor:pointer}#q-module button:hover,#s-module button:hover{transform:translateY(-1px);filter:brightness(.97);box-shadow:0 4px 10px rgba(74,55,39,.08)}#q-module button:active,#s-module button:active{transform:translateY(0) scale(.985);box-shadow:none}
+@media(max-width:700px){#t-module .tarot-app{width:calc(100% - 18px);padding:12px 0 42px}#t-module .tarot-stage{padding:11px;border-radius:16px}#t-module .tarot-result{grid-template-columns:1fr;gap:13px}#t-module .tarot-card{min-height:360px}#t-module .tarot-image{max-height:350px}#t-module .tarot-name{font-size:24px}#t-module .tarot-actions{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 94px 48px;gap:7px}#t-module .tarot-help{width:48px;min-width:48px}#t-module .tarot-modal-back{padding:8px;align-items:flex-end}#t-module .tarot-modal{border-radius:18px 18px 0 0;max-height:92vh;padding:13px}#t-module .tarot-modal-head{top:-13px}#t-module .guide-intro,#t-module .guide-cards{grid-template-columns:1fr}#t-module .guide-card{grid-template-columns:62px 1fr}#t-module .guide-card img{width:62px;height:107px}}
 </style>
 </head><body>
 <nav class="random-nav"><div class="random-row"><div class="random-brand">🎲 RANDOM</div>
 <div class="random-tabs">
-<button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button><button class="random-tab" data-tool="l">LOG</button>
+<button class="random-tab active" data-tool="c">CONCEPT</button><button class="random-tab" data-tool="q">Q&amp;A</button><button class="random-tab" data-tool="s">SELECT</button><button class="random-tab" data-tool="t">TAROT</button>
 </div></div></nav>
 <section id="c-module" class="random-module active">
 <div class="app">
@@ -864,54 +717,30 @@ html,body{background:#eee9dc}
 
 
 </section>
-<section id="l-module" class="random-module">
-  <div class="log-app">
-    <section class="log-compose">
-      <div class="log-meta">
-        <div><label for="l-date">날짜</label><input id="l-date" type="date"></div>
-        <div><label for="l-category">분류</label><select id="l-category"></select></div>
-        <label class="log-ai"><input id="l-ai" type="checkbox"> AI</label>
-      </div>
-      <label for="l-text">내용</label>
-      <textarea id="l-text" placeholder="컨셉, 생각, 대사, 소재를 기록하세요."></textarea>
-      <div class="log-actions"><button class="log-btn" id="l-cancel" style="display:none">수정 취소</button></div>
-      <div class="log-autosave-note" id="l-status">내용을 입력하면 자동으로 저장됩니다.</div>
-    </section>
 
-    <section class="log-tools">
-      <div class="log-filter-row">
-        <input id="l-search" type="search" placeholder="기록 검색">
-        <select id="l-filterCat"><option value="">전체 분류</option></select>
-        <select id="l-filterAI"><option value="">전체 출처</option><option value="original">직접 작성</option><option value="ai">AI</option></select>
-        <select id="l-sort"><option value="new">최신순</option><option value="old">오래된순</option></select>
-        <label class="log-year-toggle"><input id="l-thisYear" type="checkbox" checked> 올해만</label>
-        <button class="log-settings-btn" id="l-settingsBtn" type="button" aria-label="로그 설정" title="로그 설정">⚙</button>
+<section id="t-module" class="random-module">
+  <div class="tarot-app">
+    <section class="tarot-stage">
+      <div class="tarot-result">
+        <div class="tarot-card back" id="t-card"><img class="tarot-image" id="t-image" alt="" hidden></div>
+        <div class="tarot-info" id="t-cardContent" hidden>
+          <div class="tarot-type" id="t-type"></div><div class="tarot-name" id="t-name"></div><div class="tarot-dir" id="t-dir"></div><div class="tarot-keywords" id="t-keywords"></div>
+          <div class="tarot-reading">
+            <div class="reading-box"><div class="reading-label">핵심 의미</div><div class="reading-text" id="t-core"></div></div>
+            <div class="reading-box"><div class="reading-label">그림 읽기 · 상징</div><div class="reading-text" id="t-symbol"></div></div>
+            <div class="reading-box"><div class="reading-label" id="t-meaningLabel">정방향 해석</div><div class="reading-text" id="t-meaning"></div></div>
+            <div class="reading-box"><div class="reading-label">실제 리딩 포인트</div><div class="reading-text" id="t-readingPoint"></div></div>
+            <div class="reading-box"><div class="reading-label">이 카드 기억하기</div><div class="reading-text" id="t-memory"></div></div>
+          </div>
+        </div>
       </div>
-    </section>
-    <div class="log-list" id="l-list"></div>
-  </div>
-
-  <div class="log-settings-back" id="l-settingsBack" aria-hidden="true">
-    <section class="log-settings-panel" role="dialog" aria-modal="true" aria-labelledby="l-settingsTitle">
-      <div class="log-settings-head"><h3 id="l-settingsTitle">데이터 관리</h3><button class="log-btn log-settings-close" id="l-settingsClose" type="button">×</button></div>
-      <div class="log-manage log-manage-always" id="l-manage">
-        <h3>컨셉 분류</h3>
-        <div class="log-cat-list" id="l-catList"></div>
-        <div class="log-addcat"><input id="l-newCat" type="text" maxlength="30" placeholder="새 분류"><button class="log-btn log-action-accent" id="l-addCat">추가</button></div>
-      </div>
-      <div class="log-data-actions log-data-primary">
-        <button class="log-btn log-action-accent" id="l-exportJson">백업</button>
-        <button class="log-btn log-action-accent" id="l-importJson">복원</button>
-        <button class="log-btn danger-outline" id="l-resetLog">초기화</button>
-        <input id="l-importFile" type="file" accept="application/json,.json" hidden>
-      </div>
-      <div class="log-data-actions log-data-export">
-        <button class="log-btn log-action-soft" id="l-exportMd">MD 내보내기</button>
-        <button class="log-btn log-action-soft" id="l-exportCsv">CSV 내보내기</button>
-      </div>
+      <div class="tarot-session" id="t-session" aria-label="이번에 뽑은 카드"></div><div class="tarot-actions"><button class="tarot-draw" id="t-draw" type="button">한 장 뽑기</button><button class="tarot-next" id="t-next" type="button">다음 장 뽑기</button><button class="tarot-reverse-toggle" id="t-reverseToggle" type="button" aria-pressed="false">역방향</button><button class="tarot-help" id="t-help" type="button" aria-label="타로 가이드" title="타로 가이드" onclick="window.openTarotGuide&&window.openTarotGuide()">?</button></div>
+      <input id="t-reversed" type="checkbox" hidden>
     </section>
   </div>
+  <div class="tarot-modal-back" id="t-guideBack" aria-hidden="true"><div class="tarot-modal"><div class="tarot-modal-head"><h3>TAROT GUIDE</h3><button class="tarot-close" id="t-guideClose" type="button">×</button></div><div id="t-guideBody"></div></div></div>
 </section>
+
 <script>
 document.querySelectorAll('.random-tab').forEach(b=>b.addEventListener('click',()=>{
  document.querySelectorAll('.random-tab').forEach(x=>x.classList.toggle('active',x===b));
@@ -1265,8 +1094,8 @@ function openSettings(){
  <div class="settingsGrid concept-settings-main">
   <div class="settingCard"><h3>소재 데이터</h3><div class="muted">주인공, 욕망, 상황, 관계 등 조합 재료를 관리합니다.</div><div class="actions"><button class="btn" onclick="openData()">데이터 관리</button></div></div>
   <div class="settingCard"><h3>프롬프트</h3><div class="muted">발전시키기에 사용할 프리셋을 추가·수정·삭제합니다.</div><div class="actions"><button class="btn" onclick="openPromptManager()">프롬프트 관리</button></div></div>
-  <div class="settingCard"><h3>통합 백업</h3><div class="muted">CONCEPT · Q&amp;A · SELECT 데이터를 하나의 JSON으로 저장하거나 복원합니다. LOG는 포함하지 않습니다.</div><div class="actions"><button class="btn" onclick="exportUnifiedData()">통합 내보내기</button><button class="btn" onclick="importUnifiedData()">통합 가져오기</button></div></div>
-  <div class="settingCard"><h3>초기화</h3><div class="muted">CONCEPT · Q&amp;A · SELECT 데이터를 한 번에 초기화합니다. LOG 기록은 그대로 유지됩니다.</div><div class="actions"><button class="btn danger" onclick="resetUnifiedData()">통합 데이터 초기화</button><button class="btn" onclick="restoreDefaults()">CONCEPT 기본값 복원</button></div></div>
+  <div class="settingCard"><h3>통합 백업</h3><div class="muted">CONCEPT · Q&amp;A · SELECT · TAROT 설정을 하나의 JSON으로 저장하거나 복원합니다.</div><div class="actions"><button class="btn" onclick="exportUnifiedData()">통합 내보내기</button><button class="btn" onclick="importUnifiedData()">통합 가져오기</button></div></div>
+  <div class="settingCard"><h3>초기화</h3><div class="muted">CONCEPT · Q&amp;A · SELECT 데이터와 TAROT 설정을 한 번에 초기화합니다.</div><div class="actions"><button class="btn danger" onclick="resetUnifiedData()">통합 데이터 초기화</button><button class="btn" onclick="restoreDefaults()">CONCEPT 기본값 복원</button></div></div>
  </div>`)
 }
 function openData(){const cats=Object.keys(LABELS).filter(k=>Array.isArray(data[k]));showModal(`<div id="dataModal"></div>`);renderDataModal(cats[0]||"protagonist")}
@@ -1284,10 +1113,11 @@ function saveDataItem(cat,i){const v=document.getElementById("editValue").value.
 function removeData(cat,i){if(!confirm("이 데이터를 삭제할까요?"))return;data[cat].splice(i,1);saveData();openData()}
 function exportUnifiedData(){
  const payload={
-  app:"RANDOM",version:1,exportedAt:new Date().toISOString(),
+  app:"RANDOM",version:2,exportedAt:new Date().toISOString(),
   concept:{data:clone(data),prompts:clone(prompts),favorites:getFavorites()},
   qa:{categories:structuredClone(categories),questions:structuredClone(questions),favorites:[...favorites]},
-  select:window.randomSelectBridge.exportData()
+  select:window.randomSelectBridge.exportData(),
+  tarot:window.randomTarotBridge?window.randomTarotBridge.exportData():{reversed:false}
  };
  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),a=document.createElement("a");
  const url=URL.createObjectURL(blob);
@@ -1303,20 +1133,22 @@ function importUnifiedData(){
    if(!x.concept.data||!Array.isArray(x.concept.prompts)||!Array.isArray(x.concept.favorites))throw new Error("concept");
    if(!Array.isArray(x.qa.categories)||!Array.isArray(x.qa.questions)||!Array.isArray(x.qa.favorites))throw new Error("qa");
    if(!Array.isArray(x.select.sets)||!x.select.sets.length)throw new Error("select");
-   if(!confirm("현재 CONCEPT · Q&A · SELECT 데이터를 백업 파일 내용으로 교체할까요?\n\nLOG 기록은 변경되지 않습니다."))return;
+   if(!confirm("현재 CONCEPT · Q&A · SELECT 데이터와 TAROT 설정을 백업 파일 내용으로 교체할까요?"))return;
    data=x.concept.data;prompts=x.concept.prompts;setFavorites(x.concept.favorites);saveData();savePrompts();current=null;selectedKeys.clear();renderEmpty();
    categories=x.qa.categories;questions=x.qa.questions;favorites=new Set(x.qa.favorites);currentQuestionId=null;questionMode="normal";selectedCategories.clear();q_save();updateNav();
    window.randomSelectBridge.importData(x.select);
-   alert("CONCEPT · Q&A · SELECT 통합 백업을 가져왔습니다.\nLOG 기록은 그대로 유지됩니다.");openSettings();
+   if(window.randomTarotBridge)window.randomTarotBridge.importData(x.tarot||{reversed:false});
+   alert("CONCEPT · Q&A · SELECT · TAROT 통합 백업을 가져왔습니다.");openSettings();
   }catch(err){console.error("RANDOM unified import error",err);alert("RANDOM 통합 백업 JSON 파일 형식을 확인해 주세요.");}};
   r.onerror=()=>alert("파일을 읽는 중 오류가 발생했습니다.");r.readAsText(f,"utf-8");};input.click();
 }
 function resetUnifiedData(){
- if(!confirm("CONCEPT · Q&A · SELECT 데이터를 모두 초기화할까요?\n\nLOG 기록은 유지됩니다. 내보내지 않은 데이터는 복구할 수 없습니다."))return;
+ if(!confirm("CONCEPT · Q&A · SELECT 데이터와 TAROT 설정을 모두 초기화할까요?\n\n내보내지 않은 데이터는 복구할 수 없습니다."))return;
  data={};Object.keys(BASE_DATA).forEach(k=>data[k]=[]);prompts=[];setFavorites([]);saveData();savePrompts();current=null;selectedKeys.clear();renderEmpty();
  categories=structuredClone(DEFAULT_CATEGORIES);questions=structuredClone(QUESTIONS);favorites=new Set();currentQuestionId=null;questionMode="normal";selectedCategories.clear();q_save();updateNav();
  window.randomSelectBridge.resetData();
- alert("CONCEPT · Q&A · SELECT 데이터를 초기화했습니다.\nLOG 기록은 그대로 유지됩니다.");openSettings();
+ if(window.randomTarotBridge)window.randomTarotBridge.resetData();
+ alert("CONCEPT · Q&A · SELECT · TAROT 데이터를 초기화했습니다.");openSettings();
 }
 function exportData(){
  const backup={app:"CONCEPT",version:3,exportedAt:new Date().toISOString(),data,prompts};
@@ -2401,62 +2233,53 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<script id="log-script-v1">
+
+<script id="tarot-script-v2">
 (function(){
 "use strict";
-const ENTRY_KEY="random_log_entries_v1", CAT_KEY="random_log_categories_v1", SET_KEY="random_log_settings_v1";
-const $=id=>document.getElementById(id);
-const uid=()=>window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
-const today=()=>{const d=new Date(), z=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`};
-const esc=x=>String(x??"").replace(/[&<>\"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;","'":"&#39;"}[m]));
-let categories, entries, settings, editing=null;
-try{categories=JSON.parse(localStorage.getItem(CAT_KEY)||"null")}catch(e){}
-if(!Array.isArray(categories)||!categories.length) categories=["컨셉","생각","대사","소재"].map(name=>({id:uid(),name}));
-try{entries=JSON.parse(localStorage.getItem(ENTRY_KEY)||"[]")}catch(e){entries=[]}
-if(!Array.isArray(entries))entries=[];
-try{settings=JSON.parse(localStorage.getItem(SET_KEY)||"{}")||{}}catch(e){settings={}}
-function saveAll(){localStorage.setItem(CAT_KEY,JSON.stringify(categories));localStorage.setItem(ENTRY_KEY,JSON.stringify(entries));localStorage.setItem(SET_KEY,JSON.stringify(settings))}
-function catName(id){return categories.find(c=>c.id===id)?.name||"미분류"}
-function status(t){$("l-status").textContent=t||""; if(t)setTimeout(()=>{if($("l-status").textContent===t)$("l-status").textContent=""},2200)}
-function renderCats(){
- const cur=$("l-category").value;
- $("l-category").innerHTML=categories.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
- if(categories.some(c=>c.id===cur))$("l-category").value=cur;
- $("l-filterCat").innerHTML='<option value="">전체 분류</option>'+categories.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
- $("l-catList").innerHTML=categories.map(c=>`<div class="log-cat-row"><input type="text" maxlength="30" value="${esc(c.name)}" data-catname="${esc(c.id)}"><button class="log-btn danger" data-catdel="${esc(c.id)}">삭제</button></div>`).join("");
-}
-function filtered(){
- const q=$("l-search").value.trim().toLowerCase(), c=$("l-filterCat").value, a=$("l-filterAI").value, old=$("l-sort").value==="old", thisYear=$("l-thisYear").checked, year=String(new Date().getFullYear());
- return entries.filter(e=>(!thisYear||String(e.date).startsWith(year+"-"))&&(!q||String(e.text).toLowerCase().includes(q))&&(!c||e.categoryId===c)&&(!a||(a==="ai"?!!e.ai:!e.ai))).sort((x,y)=>{const d=String(x.date).localeCompare(String(y.date));const t=(x.createdAt||0)-(y.createdAt||0);return old?(d||t):-(d||t)});
-}
-function render(){
- const list=filtered();
- $("l-list").innerHTML=list.length?list.map(e=>`<article class="log-entry" data-edit="${esc(e.id)}"><div class="log-entry-head"><span>${esc(e.date)}</span><span class="log-cat">[${esc(catName(e.categoryId))}]</span>${e.ai?'<span class="log-ai-mark">(AI)</span>':''}<span class="log-entry-actions"><button data-editbtn="${esc(e.id)}">수정</button><button data-del="${esc(e.id)}">삭제</button></span></div><div class="log-text">${esc(e.text)}</div></article>`).join(""):'<div class="log-empty">아직 기록이 없습니다.</div>';
-}
-let autoSaveTimer=null, autoSaving=false;
-function resetForm(){editing=null;$("l-date").value=today();$("l-ai").checked=false;$("l-text").value="";$("l-cancel").style.display="none";status("내용을 입력하면 자동으로 저장됩니다.")}
-function edit(id){const e=entries.find(x=>x.id===id);if(!e)return;editing=id;$("l-date").value=e.date;$("l-category").value=e.categoryId;$("l-ai").checked=!!e.ai;$("l-text").value=e.text;$("l-cancel").style.display="inline-block";$("l-text").focus();window.scrollTo({top:0,behavior:"smooth"})}
-function autoSaveEntry(){if(autoSaving)return;const text=$("l-text").value.trim();if(!text){if(editing){editing=null;$("l-cancel").style.display="none"}status("내용을 입력하면 자동으로 저장됩니다.");return}autoSaving=true;const obj={date:$("l-date").value||today(),categoryId:$("l-category").value,ai:$("l-ai").checked,text,updatedAt:Date.now()};if(editing){const i=entries.findIndex(e=>e.id===editing);if(i>=0)entries[i]={...entries[i],...obj};else editing=null}if(!editing){const id=uid();entries.push({id,createdAt:Date.now(),...obj});editing=id;$("l-cancel").style.display="inline-block"}saveAll();render();status("자동 저장됨");autoSaving=false}
-function scheduleAutoSave(){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(autoSaveEntry,450)}
-function download(name,type,text){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function exportJson(){download(`LOG_${today()}.json`,"application/json;charset=utf-8",JSON.stringify({app:"LOG",version:1,exportedAt:new Date().toISOString(),categories,entries,settings},null,2))}
-function exportMd(){const a=[...entries].sort((x,y)=>String(x.date).localeCompare(String(y.date))||((x.createdAt||0)-(y.createdAt||0)));let out="",last="";for(const e of a){if(e.date!==last){if(out)out+="\n";out+=`### ${e.date}\n\n`;last=e.date}out+=`[${catName(e.categoryId)}] ${String(e.text).trim()}${e.ai?" (AI)":""}\n\n`}download(`LOG_${today()}.md`,"text/markdown;charset=utf-8",out.trimEnd()+"\n")}
-function csvCell(v){v=String(v??"");return /[\",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
-function exportCsv(){const old=confirm("CSV를 오래된 날짜부터 정렬해서 내보낼까요?\n\n확인: 오래된순 / 취소: 최신순");const a=[...entries].sort((x,y)=>{const d=String(x.date).localeCompare(String(y.date))||((x.createdAt||0)-(y.createdAt||0));return old?d:-d});const rows=[["날짜","분류","내용","AI"],...a.map(e=>[e.date,catName(e.categoryId),e.text,e.ai?"AI":""])];download(`LOG_${today()}.csv`,"text/csv;charset=utf-8","\ufeff"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n"))}
-function importJson(file){const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(String(r.result).replace(/^\ufeff/,"").trim());if(!j||j.app!=="LOG"||!Array.isArray(j.categories)||!Array.isArray(j.entries))throw 0;if(!confirm("현재 LOG 기록과 분류를 백업 파일의 내용으로 교체할까요?"))return;categories=j.categories.filter(c=>c&&c.id&&String(c.name||"").trim()).map(c=>({id:String(c.id),name:String(c.name).trim()}));entries=j.entries.filter(e=>e&&e.id&&e.date&&e.categoryId&&typeof e.text==="string");settings=j.settings&&typeof j.settings==="object"?j.settings:{};if(!categories.length)throw 0;saveAll();renderCats();resetForm();$("l-thisYear").checked=settings.thisYear!==false;render();status("LOG 백업을 불러왔습니다.")}catch(e){alert("LOG JSON 파일 형식을 확인해 주세요.")}};r.onerror=()=>alert("파일을 읽는 중 오류가 발생했습니다.");r.readAsText(file)}
-$("l-cancel").onclick=resetForm;$("l-text").addEventListener("input",scheduleAutoSave);["l-date","l-category","l-ai"].forEach(id=>$(id).addEventListener("change",scheduleAutoSave));
-["l-search","l-filterCat","l-filterAI","l-sort"].forEach(id=>$(id).addEventListener(id==="l-search"?"input":"change",render));
-$("l-thisYear").checked=settings.thisYear!==false;$("l-thisYear").addEventListener("change",()=>{settings.thisYear=$("l-thisYear").checked;saveAll();render()});
-$("l-list").onclick=e=>{const del=e.target.closest("[data-del]");if(del){e.stopPropagation();const id=del.dataset.del;if(confirm("이 기록을 삭제할까요?")){entries=entries.filter(x=>x.id!==id);saveAll();if(editing===id)resetForm();render()}return}const ed=e.target.closest("[data-editbtn]")||e.target.closest("[data-edit]");if(ed)edit(ed.dataset.editbtn||ed.dataset.edit)};
-$("l-addCat").onclick=()=>{const n=$("l-newCat").value.trim();if(!n)return;if(categories.some(c=>c.name===n)){status("이미 있는 분류입니다.");return}categories.push({id:uid(),name:n});$("l-newCat").value="";saveAll();renderCats();render()};
-$("l-catList").addEventListener("change",e=>{if(!e.target.matches("[data-catname]"))return;const c=categories.find(x=>x.id===e.target.dataset.catname),n=e.target.value.trim();if(!c||!n){renderCats();return}if(categories.some(x=>x.id!==c.id&&x.name===n)){alert("같은 이름의 분류가 이미 있습니다.");renderCats();return}c.name=n;saveAll();renderCats();render()});
-$("l-catList").addEventListener("click",e=>{const b=e.target.closest("[data-catdel]");if(!b)return;const id=b.dataset.catdel;if(entries.some(x=>x.categoryId===id)){alert("이 분류를 사용하는 기록이 있습니다. 먼저 해당 기록의 분류를 바꿔 주세요.");return}if(categories.length<=1){alert("분류는 하나 이상 필요합니다.");return}if(confirm("이 분류를 삭제할까요?")){categories=categories.filter(x=>x.id!==id);saveAll();renderCats();render()}});
-$("l-exportJson").onclick=exportJson;$("l-exportMd").onclick=exportMd;$("l-exportCsv").onclick=exportCsv;$("l-importJson").onclick=()=>$("l-importFile").click();$("l-importFile").onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)importJson(f);e.target.value=""};
-function openLogSettings(){$("l-settingsBack").classList.add("open");$("l-settingsBack").setAttribute("aria-hidden","false")}
-function closeLogSettings(){$("l-settingsBack").classList.remove("open");$("l-settingsBack").setAttribute("aria-hidden","true");$("l-manage").classList.remove("open")}
-$("l-settingsBtn").onclick=openLogSettings;$("l-settingsClose").onclick=closeLogSettings;$("l-settingsBack").addEventListener("click",e=>{if(e.target===$("l-settingsBack"))closeLogSettings()});
-$("l-resetLog").onclick=()=>{if(!entries.length){status("삭제할 LOG 기록이 없습니다.");closeLogSettings();return}if(confirm("LOG 탭에 기록된 데이터를 전부 삭제할까요?\n\nCONCEPT, Q&A, SELECT 데이터에는 영향을 주지 않습니다.")){entries=[];localStorage.setItem(ENTRY_KEY,"[]");editing=null;resetForm();render();closeLogSettings();status("LOG 기록을 초기화했습니다.")}};
-renderCats();resetForm();render();
+const PREF_KEY="random_tarot_settings_v1";
+["random_log_entries_v1","random_log_categories_v1","random_log_settings_v1"].forEach(k=>localStorage.removeItem(k));
+const cards=[
+["M00","Major","바보","The Fool","자유, 새로운 출발, 모험, 가능성"],["M01","Major","마법사","The Magician","의지, 실행, 기술, 자원 활용"],["M02","Major","여사제","The High Priestess","직관, 내면, 비밀, 기다림"],["M03","Major","여황제","The Empress","풍요, 돌봄, 창조, 성장"],["M04","Major","황제","The Emperor","질서, 책임, 권위, 구조"],["M05","Major","교황","The Hierophant","전통, 배움, 제도, 조언"],["M06","Major","연인","The Lovers","관계, 선택, 가치, 결합"],["M07","Major","전차","The Chariot","의지, 전진, 통제, 승리"],["M08","Major","힘","Strength","용기, 인내, 온화한 통제, 내면의 힘"],["M09","Major","은둔자","The Hermit","성찰, 탐구, 고독, 지혜"],["M10","Major","운명의 수레바퀴","Wheel of Fortune","변화, 순환, 전환점, 타이밍"],["M11","Major","정의","Justice","균형, 책임, 판단, 인과"],["M12","Major","매달린 사람","The Hanged Man","멈춤, 관점 전환, 내려놓음, 기다림"],["M13","Major","죽음","Death","종결, 변화, 이행, 새 단계"],["M14","Major","절제","Temperance","조화, 중용, 통합, 조절"],["M15","Major","악마","The Devil","집착, 속박, 욕망, 그림자"],["M16","Major","탑","The Tower","붕괴, 충격, 폭로, 재구성"],["M17","Major","별","The Star","희망, 회복, 영감, 신뢰"],["M18","Major","달","The Moon","불확실, 직감, 두려움, 환상"],["M19","Major","태양","The Sun","명료함, 활력, 기쁨, 성공"],["M20","Major","심판","Judgement","각성, 부름, 재평가, 결단"],["M21","Major","세계","The World","완성, 통합, 성취, 마무리"],
+["W01","Wands","완드 에이스","Ace of Wands","영감, 시작, 열정, 창조력"],["W02","Wands","완드 2","Two of Wands","계획, 전망, 선택, 확장"],["W03","Wands","완드 3","Three of Wands","확장, 전망, 기다림, 진척"],["W04","Wands","완드 4","Four of Wands","축하, 안정, 공동체, 안착"],["W05","Wands","완드 5","Five of Wands","경쟁, 충돌, 훈련, 소란"],["W06","Wands","완드 6","Six of Wands","승리, 인정, 자신감, 소식"],["W07","Wands","완드 7","Seven of Wands","방어, 신념, 버팀, 경쟁"],["W08","Wands","완드 8","Eight of Wands","속도, 이동, 소식, 진행"],["W09","Wands","완드 9","Nine of Wands","경계, 끈기, 피로, 방어"],["W10","Wands","완드 10","Ten of Wands","부담, 책임, 과로, 완수"],["W11","Wands","완드 시종","Page of Wands","호기심, 탐색, 소식, 가능성"],["W12","Wands","완드 기사","Knight of Wands","돌진, 모험, 추진, 충동"],["W13","Wands","완드 여왕","Queen of Wands","자신감, 매력, 독립, 활력"],["W14","Wands","완드 왕","King of Wands","비전, 리더십, 결단, 추진"],
+["C01","Cups","컵 에이스","Ace of Cups","감정의 시작, 사랑, 수용, 충만"],["C02","Cups","컵 2","Two of Cups","교감, 관계, 합의, 상호성"],["C03","Cups","컵 3","Three of Cups","우정, 축하, 모임, 나눔"],["C04","Cups","컵 4","Four of Cups","권태, 무관심, 성찰, 놓친 제안"],["C05","Cups","컵 5","Five of Cups","상실, 후회, 슬픔, 남은 가능성"],["C06","Cups","컵 6","Six of Cups","추억, 순수, 과거, 친절"],["C07","Cups","컵 7","Seven of Cups","환상, 선택지, 욕망, 혼란"],["C08","Cups","컵 8","Eight of Cups","떠남, 탐색, 미련 정리, 더 깊은 의미"],["C09","Cups","컵 9","Nine of Cups","만족, 소원, 즐거움, 풍족"],["C10","Cups","컵 10","Ten of Cups","행복, 가족, 조화, 정서적 완성"],["C11","Cups","컵 시종","Page of Cups","감수성, 호감, 창의성, 감정의 소식"],["C12","Cups","컵 기사","Knight of Cups","제안, 로맨스, 이상, 감정적 접근"],["C13","Cups","컵 여왕","Queen of Cups","공감, 직관, 돌봄, 감정 이해"],["C14","Cups","컵 왕","King of Cups","감정 조절, 포용, 성숙, 외교"],
+["S01","Swords","소드 에이스","Ace of Swords","명료함, 결단, 진실, 사고의 시작"],["S02","Swords","소드 2","Two of Swords","교착, 고민, 회피, 균형"],["S03","Swords","소드 3","Three of Swords","상처, 슬픔, 진실, 단절"],["S04","Swords","소드 4","Four of Swords","휴식, 회복, 정지, 사색"],["S05","Swords","소드 5","Five of Swords","갈등, 대가, 승패, 긴장"],["S06","Swords","소드 6","Six of Swords","이동, 회복, 전환, 거리두기"],["S07","Swords","소드 7","Seven of Swords","전략, 비밀, 우회, 독자 행동"],["S08","Swords","소드 8","Eight of Swords","제약, 두려움, 고립, 자기 제한"],["S09","Swords","소드 9","Nine of Swords","걱정, 불안, 죄책감, 과도한 생각"],["S10","Swords","소드 10","Ten of Swords","끝, 바닥, 종결, 다시 시작"],["S11","Swords","소드 시종","Page of Swords","호기심, 경계, 관찰, 정보"],["S12","Swords","소드 기사","Knight of Swords","속도, 주장, 돌진, 성급함"],["S13","Swords","소드 여왕","Queen of Swords","독립, 분별, 솔직함, 경계"],["S14","Swords","소드 왕","King of Swords","논리, 권위, 원칙, 판단"],
+["P01","Pentacles","펜타클 에이스","Ace of Pentacles","기회, 자원, 현실적 시작, 안정"],["P02","Pentacles","펜타클 2","Two of Pentacles","균형, 적응, 우선순위, 병행"],["P03","Pentacles","펜타클 3","Three of Pentacles","협업, 기술, 숙련, 인정"],["P04","Pentacles","펜타클 4","Four of Pentacles","보존, 소유, 안정, 통제"],["P05","Pentacles","펜타클 5","Five of Pentacles","결핍, 소외, 어려움, 도움"],["P06","Pentacles","펜타클 6","Six of Pentacles","나눔, 지원, 균형, 보상"],["P07","Pentacles","펜타클 7","Seven of Pentacles","평가, 기다림, 투자, 수확 전 점검"],["P08","Pentacles","펜타클 8","Eight of Pentacles","연습, 숙련, 성실, 반복"],["P09","Pentacles","펜타클 9","Nine of Pentacles","자립, 풍요, 성취, 여유"],["P10","Pentacles","펜타클 10","Ten of Pentacles","유산, 가족, 안정, 장기적 성취"],["P11","Pentacles","펜타클 시종","Page of Pentacles","배움, 계획, 현실적 소식, 시작"],["P12","Pentacles","펜타클 기사","Knight of Pentacles","꾸준함, 책임, 반복, 신뢰"],["P13","Pentacles","펜타클 여왕","Queen of Pentacles","돌봄, 실용, 안정, 풍요"],["P14","Pentacles","펜타클 왕","King of Pentacles","안정, 자산, 경영, 현실적 성공"]
+].map(x=>({id:x[0],family:x[1],ko:x[2],en:x[3],keywords:x[4]}));
+const majorSymbol={M00:"절벽 끝의 여행자, 흰 장미, 작은 개, 높은 산은 순수한 가능성과 위험을 함께 보여준다.",M01:"한 손은 하늘, 한 손은 땅을 가리키고 탁자에는 네 수트의 도구가 놓여 있다. 생각을 현실로 옮길 자원이 이미 있다는 그림이다.",M02:"흑백 기둥 사이의 여사제와 장막, 달은 겉으로 드러나지 않은 지식과 직관을 뜻한다.",M03:"곡식과 숲, 금성 문양, 풍성한 옷은 생명력·감각·돌봄·창조가 자라는 장면이다.",M04:"돌 왕좌와 산, 갑옷은 감정보다 구조와 경계, 책임을 먼저 세우는 힘을 보여준다.",M05:"두 제자와 열쇠, 의식적 손짓은 전통·교육·제도 안에서 지식을 전수하는 장면이다.",M06:"두 인물과 천사, 나무와 산은 끌림만이 아니라 서로 다른 가치 앞에서의 선택과 결합을 보여준다.",M07:"전차와 서로 다른 두 스핑크스는 반대 방향의 힘을 의지로 한 방향에 묶어 전진시키는 모습이다.",M08:"여인이 사자를 억누르지 않고 부드럽게 다루는 장면은 힘을 폭력이 아니라 인내와 자기조절로 읽게 한다.",M09:"산꼭대기의 은둔자와 등불은 외부의 소음에서 떨어져 자기 기준과 지혜를 찾는 모습이다.",M10:"회전하는 바퀴와 여러 상징은 통제할 수 없는 순환, 변화하는 위치와 타이밍을 보여준다.",M11:"검과 저울은 감정적 편들기보다 사실·균형·책임에 따라 결론을 내리는 원리를 상징한다.",M12:"거꾸로 매달렸지만 표정이 평온한 인물과 빛나는 머리는 멈춤을 통해 관점이 바뀌는 순간을 보여준다.",M13:"해골 기수와 쓰러진 인물, 떠오르는 태양은 한 단계의 끝이 다음 단계의 시작을 만든다는 장면이다.",M14:"천사가 두 컵 사이로 물을 옮기며 한 발은 물, 한 발은 땅에 둔다. 서로 다른 것을 조절해 새 균형을 만드는 카드다.",M15:"사슬에 묶인 두 인물과 악마는 욕망·습관·집착에 스스로 묶인 상태와 그 사슬을 인식하는 문제를 보여준다.",M16:"번개 맞은 탑에서 사람들이 떨어지는 장면은 잘못 세운 구조가 갑자기 무너져 진실이 드러나는 순간이다.",M17:"별빛 아래 물을 붓는 인물은 큰 충격 뒤에 다시 흐르기 시작하는 희망·회복·솔직함을 보여준다.",M18:"달, 두 탑, 개와 늑대, 물에서 올라오는 가재는 익숙함과 본능 사이의 불확실한 길과 무의식을 상징한다.",M19:"큰 태양과 아이, 해바라기는 숨김없는 명료함·생명력·기쁨이 밖으로 드러나는 장면이다.",M20:"천사의 나팔에 사람들이 관에서 일어나는 장면은 과거를 돌아보고 부름에 응답해 새 단계로 깨어나는 순간이다.",M21:"월계환 속 인물과 네 존재는 긴 여정의 요소들이 하나로 통합되어 한 주기가 완성되는 모습을 보여준다."};
+const suitSymbol={Wands:"완드는 불의 수트다. 그림에서 막대기·움직임·몸의 방향을 보고 열정, 행동, 창조력의 상태를 읽는다.",Cups:"컵은 물의 수트다. 컵의 배치와 인물의 표정을 보고 감정, 관계, 수용과 교류의 상태를 읽는다.",Swords:"소드는 공기의 수트다. 검의 방향, 하늘과 인물의 긴장을 보고 생각, 말, 판단, 갈등의 상태를 읽는다.",Pentacles:"펜타클은 땅의 수트다. 동전, 작업, 건물과 몸의 자세를 보고 돈, 일, 건강, 생활 기반을 읽는다."};
+const rankLesson={1:"에이스는 수트의 에너지가 씨앗처럼 막 시작되는 단계다.",2:"2는 둘 사이의 균형·선택·대립을 본다.",3:"3은 시작된 힘이 관계나 결과로 확장되는 단계다.",4:"4는 구조·안정·고정이 생기는 단계다.",5:"5는 안정이 흔들리며 갈등·결핍·변화를 겪는 단계다.",6:"6은 5의 흔들림 뒤 조정·회복·진전이 나타나는 단계다.",7:"7은 시험, 평가, 전략처럼 한 번 더 점검하는 단계다.",8:"8은 힘이 구체적으로 움직이거나 반복·숙련되는 단계다.",9:"9는 완성 직전의 성숙과 부담을 함께 본다.",10:"10은 한 사이클이 꽉 차 결과·완성과 다음 단계의 부담을 보여준다.",11:"시종은 배우고 관찰하며 소식을 가져오는 초보자의 에너지다.",12:"기사는 수트의 힘을 행동으로 밀어붙이는 방식이다.",13:"여왕은 수트의 힘을 내면에서 성숙하게 다루는 방식이다.",14:"왕은 수트의 힘을 외부 세계에서 책임 있게 운영하는 방식이다."};
+const majorMeaning={M00:"익숙한 안전지대를 벗어나 새 경험을 시작한다. 아직 모든 답이 없어도 가능성을 믿고 첫발을 내딛는 힘이다.",M01:"아이디어를 실행할 도구와 능력이 손에 있다. 의도를 분명히 하고 가진 자원을 연결해 현실적인 행동으로 옮긴다.",M02:"겉으로 보이는 정보보다 직감과 아직 말해지지 않은 부분을 읽는다. 성급히 결론내리기보다 관찰하고 기다린다.",M03:"무언가를 키우고 돌보며 풍요롭게 만드는 힘이다. 창작, 관계, 몸과 생활을 실제로 보살피는 쪽으로 읽는다.",M04:"경계와 규칙을 세우고 책임 있게 통제한다. 감정보다 구조를 먼저 잡아 안정적인 기반을 만드는 카드다.",M05:"검증된 방식, 스승, 조직, 전통에서 배운다. 혼자만의 방식보다 공통의 규칙과 지식을 참고할 때다.",M06:"중요한 관계 또는 가치의 선택이다. 무엇을 좋아하느냐보다 어떤 가치와 약속을 선택할 것인지가 핵심이다.",M07:"서로 다른 욕구를 한 방향으로 묶어 밀고 나간다. 목표가 분명할수록 추진력이 강해진다.",M08:"강한 감정이나 본능을 억압하지 않고 부드럽게 다룬다. 인내, 용기, 자기조절이 실제 힘이 된다.",M09:"밖의 답보다 안의 기준을 찾는 시간이다. 혼자 생각하고 조사하며 불필요한 소음을 줄일수록 답이 선명해진다.",M10:"상황의 국면이 바뀐다. 모든 것을 통제하기보다 돌아오는 기회와 타이밍을 읽고 변화에 맞춰 움직인다.",M11:"행동의 결과를 객관적으로 마주한다. 사실, 계약, 기준, 책임을 따져 공정한 결론을 내리는 카드다.",M12:"억지로 진행하기보다 멈추고 보는 방향을 바꾼다. 내려놓음이나 기다림이 손해가 아니라 새로운 이해를 만든다.",M13:"끝내야 할 것을 끝내야 다음 단계가 열린다. 실제 죽음보다 관계·상태·습관·국면의 강한 종료와 변화를 뜻한다.",M14:"극단으로 가지 않고 서로 다른 요소를 섞어 적정점을 찾는다. 천천히 조절하고 회복하며 지속 가능한 균형을 만든다.",M15:"욕망, 집착, 의존, 두려움이 선택을 묶고 있는지 본다. 사슬을 알아차리는 순간 선택권도 다시 보이기 시작한다.",M16:"버티던 구조가 갑자기 깨지며 숨겨진 문제가 드러난다. 충격은 크지만 거짓 기반을 걷어내고 다시 세울 기회이기도 하다.",M17:"상처 뒤에 희망과 신뢰가 돌아온다. 과장된 낙관보다 솔직함, 회복, 장기적인 방향을 믿는 카드다.",M18:"정보가 흐리고 감정과 상상이 사실처럼 느껴질 수 있다. 직감을 무시하지 않되 확인되지 않은 공포를 사실로 단정하지 않는다.",M19:"상황이 밝아지고 에너지와 자신감이 드러난다. 숨길 것이 적고 결과를 즐기며 솔직하게 표현하기 좋은 카드다.",M20:"과거의 경험을 다시 평가하고 중요한 부름이나 결정을 받아들인다. 같은 패턴을 반복할지 새 단계로 갈지 선택하는 각성의 카드다.",M21:"긴 과정이 하나의 완성된 형태로 닫힌다. 성취를 인정하고 배운 것을 통합한 뒤 다음 사이클로 넘어간다."};
+const reverseMajor={M00:"무모한 도약, 준비 부족, 혹은 반대로 두려워 시작하지 못하는 상태를 본다.",M01:"능력은 있지만 집중이 흩어지거나 기술을 잘못 쓰는 상태다. 말보다 실제 실행과 의도를 점검한다.",M02:"직감을 무시하거나 비밀과 혼란에 갇힐 수 있다. 느낌과 사실을 구분한다.",M03:"과보호, 창작 정체, 자기 돌봄 부족처럼 성장의 흐름이 막힌 상태를 본다.",M04:"통제가 지나쳐 경직되거나 반대로 구조가 무너진 상태다. 필요한 경계만 남긴다.",M05:"낡은 규칙에 얽매이거나 기존 방식에서 벗어나 자기 기준을 찾는 과정이다.",M06:"가치 불일치, 관계의 어긋남, 선택 회피를 본다. 원하는 것과 약속할 수 있는 것을 구분한다.",M07:"방향 상실, 과속, 통제력 저하를 본다. 속도보다 목표 정렬이 먼저다.",M08:"자기 의심, 감정 소진, 억눌린 분노처럼 내면의 힘이 흔들리는 상태다.",M09:"고립이 지나치거나 필요한 성찰을 피하는 상태다. 혼자 있음과 단절을 구분한다.",M10:"변화를 거부하거나 같은 패턴이 반복되는 느낌이다. 통제 가능한 부분과 아닌 부분을 나눈다.",M11:"불공정, 책임 회피, 자기합리화를 경계한다. 판단 전에 사실과 자신의 몫을 다시 확인한다.",M12:"의미 없는 희생, 지연, 놓지 못함을 본다. 기다림이 실제 통찰을 만드는지 확인한다.",M13:"끝난 것을 붙잡아 변화가 지연되는 상태다. 무엇을 놓아야 하는지가 핵심이다.",M14:"균형이 깨지고 과하거나 부족한 상태다. 속도를 낮추고 조합을 다시 맞춘다.",M15:"속박을 알아차리고 벗어나는 과정이거나, 집착을 부정해 더 깊이 묶인 상태일 수 있다.",M16:"붕괴를 피하려 문제를 미루거나, 충격 이후 재건을 시작하는 단계다.",M17:"희망 저하, 회복에 대한 불신을 본다. 작은 회복의 증거부터 확인한다.",M18:"혼란이 걷히기 시작하거나 반대로 불안과 자기기만이 깊어진다. 확인 가능한 정보가 중요하다.",M19:"기쁨이 줄거나 성과를 충분히 누리지 못하는 상태다. 지나친 낙관도 점검한다.",M20:"자기비판, 과거에 대한 미련, 중요한 결정을 미루는 상태다. 이미 배운 교훈을 인정한다.",M21:"마무리가 덜 되었거나 완성 직전의 지연이다. 빠진 조각을 확인하고 끝맺는다."};
+function rank(c){return c.family==="Major"?0:Number(c.id.slice(1))}
+function imageCode(c){if(c.family==="Major")return "ar"+c.id.slice(1);const pre={Wands:"wa",Cups:"cu",Swords:"sw",Pentacles:"pe"}[c.family],r=rank(c);return pre+(r===1?"ac":r<=10?String(r).padStart(2,"0"):r===11?"pa":r===12?"kn":r===13?"qu":"ki")}
+function imageUrl(c){return "https://raw.githubusercontent.com/seven102161/elaine-tarot-cards/main/cards/"+imageCode(c)+".jpg"}
+function core(c){if(c.family==="Major")return majorMeaning[c.id];const k=c.keywords.split(",").map(x=>x.trim());return `${c.ko}는 ${suitSymbol[c.family]} ${rankLesson[rank(c)]} 이 카드에서는 특히 ‘${k.slice(0,3).join(" · ")}’의 흐름을 본다.`}
+function symbol(c){if(c.family==="Major")return majorSymbol[c.id];return `${suitSymbol[c.family]} ${rankLesson[rank(c)]} 카드 그림에서 인물의 시선·몸의 방향, ${c.family==="Wands"?"완드가 향하는 방향과 움직임":c.family==="Cups"?"컵이 채워져 있는지와 인물 사이의 거리":c.family==="Swords"?"검의 방향과 하늘의 분위기":"펜타클의 배치와 일·집·몸의 상태"}를 먼저 관찰하면 의미를 외우기 쉽다.`}
+function upright(c){if(c.family==="Major")return majorMeaning[c.id];const k=c.keywords.split(",").map(x=>x.trim());return `정방향에서는 ${k.slice(0,3).join("·")}이 비교적 자연스럽게 밖으로 드러난다. ${rankLesson[rank(c)]} 질문 속 상황에서 이 에너지가 어디에서 실제로 작동하는지 찾는다.`}
+function reversed(c){if(c.family==="Major")return reverseMajor[c.id];const k=c.keywords.split(",").map(x=>x.trim());return `역방향은 정방향의 반대말 하나로 외우기보다 ‘막힘·과잉·부족·내면화·지연’ 중 무엇인지 본다. 이 카드의 ${k[0]} 또는 ${k[1]||k[0]}이 지나치거나 제대로 표현되지 않는 지점을 확인한다.`}
+function readingPoint(c,rev){const k=c.keywords.split(",").map(x=>x.trim());return rev?`먼저 “${k[0]}이 막히거나 과해진 부분은 어디인가?”를 묻는다. 카드가 나쁘다고 결론내리기보다 정방향의 힘을 건강하게 회복하려면 무엇을 조정할지 읽는다.`:`먼저 “지금 상황에서 ${k[0]}이 어디에 나타나는가?”를 묻고, 두 번째로 “그 흐름을 살리려면 어떤 행동이 필요한가?”를 본다. 카드 한 장은 사건 확정보다 현재의 초점으로 읽는다.`}
+function memory(c){if(c.family==="Major"){const m={M00:"절벽 앞의 첫걸음 = 가능성",M01:"도구는 이미 탁자 위에 = 실행",M02:"장막 뒤의 지식 = 직관",M03:"풍성한 정원 = 키우는 힘",M04:"돌 왕좌 = 구조와 책임",M05:"스승과 제자 = 전통에서 배움",M06:"사랑보다 먼저 가치의 선택",M07:"두 힘을 한 방향으로 = 전진",M08:"사자를 부드럽게 다룸 = 진짜 힘",M09:"등불 하나로 길을 찾음 = 성찰",M10:"도는 바퀴 = 국면과 타이밍",M11:"저울과 검 = 균형 잡힌 판단",M12:"거꾸로 보면 다르게 보인다",M13:"끝이 있어야 다음이 시작된다",M14:"두 컵의 물을 섞음 = 조절",M15:"사슬을 알아차려야 벗어난다",M16:"번개 맞은 탑 = 거짓 구조의 붕괴",M17:"어둠 뒤 별빛 = 회복",M18:"달빛 길 = 불확실 속 직감",M19:"대낮의 태양 = 명료한 기쁨",M20:"나팔을 듣고 일어남 = 각성과 결단",M21:"월계환 = 한 주기의 완성"};return m[c.id]}return `${c.family==="Wands"?"불·행동":c.family==="Cups"?"물·감정":c.family==="Swords"?"공기·생각":"땅·현실"} + ${rankLesson[rank(c)].split("다.")[0]} = ${c.ko}`}
+const $=id=>document.getElementById(id);let prefs={reversed:false};try{prefs.reversed=!!JSON.parse(localStorage.getItem(PREF_KEY)||"{}").reversed}catch(e){}
+function syncReverseUI(){const cb=$("t-reversed"),btn=$("t-reverseToggle");if(!cb||!btn)return;cb.checked=!!prefs.reversed;btn.classList.toggle("active",!!prefs.reversed);btn.setAttribute("aria-pressed",prefs.reversed?"true":"false");btn.title=prefs.reversed?"역방향 포함 켜짐 · 다시 누르면 해제":"역방향 포함 꺼짐 · 누르면 활성화"}
+function savePrefs(){const cb=$("t-reversed");if(cb)cb.checked=!!prefs.reversed;localStorage.setItem(PREF_KEY,JSON.stringify(prefs));syncReverseUI()}
+syncReverseUI();$("t-reverseToggle").addEventListener("click",()=>{prefs.reversed=!prefs.reversed;savePrefs()});
+function randomInt(max){if(!Number.isInteger(max)||max<=0)throw new RangeError("max must be a positive integer");if(window.crypto&&crypto.getRandomValues){const range=0x100000000,limit=range-(range%max),a=new Uint32Array(1);do{crypto.getRandomValues(a)}while(a[0]>=limit);return a[0]%max}return Math.floor(Math.random()*max)}
+let session=[];
+function showCard(c,rev){$("t-card").classList.remove("back");$("t-image").hidden=false;$("t-image").src=imageUrl(c);$("t-image").alt=c.ko+" 카드";$("t-image").classList.toggle("reversed",rev);$("t-cardContent").hidden=false;$("t-type").textContent=c.family==="Major"?"MAJOR ARCANA":c.family.toUpperCase();$("t-name").textContent=`${c.ko} · ${c.en}`;$("t-dir").textContent=rev?"역방향":"정방향";$("t-keywords").textContent=c.keywords;$("t-core").textContent=core(c);$("t-symbol").textContent=symbol(c);$("t-meaningLabel").textContent=rev?"역방향 해석":"정방향 해석";$("t-meaning").textContent=rev?reversed(c):upright(c);$("t-readingPoint").textContent=readingPoint(c,rev);$("t-memory").textContent=memory(c)}
+function renderSession(){const box=$("t-session");if(!box)return;box.classList.toggle("show",session.length>1);box.innerHTML=session.length>1?session.map((x,i)=>`<div class="tarot-session-card"><img src="${imageUrl(x.card)}" class="${x.rev?"rev":""}" alt="${x.card.ko}"><span>${i+1}장 · ${x.card.ko}</span></div>`).join(""):""}
+function pickFrom(pool){const c=pool[randomInt(pool.length)],rev=!!prefs.reversed&&randomInt(2)===1;return {card:c,rev}}
+function draw(){session=[pickFrom(cards)];showCard(session[0].card,session[0].rev);renderSession()}
+function drawNext(){const used=new Set(session.map(x=>x.card.id)),pool=cards.filter(c=>!used.has(c.id));if(!session.length)return draw();if(!pool.length)return;const x=pickFrom(pool);session.push(x);showCard(x.card,x.rev);renderSession()}
+$("t-draw").onclick=draw;$("t-next").onclick=drawNext;
+function guideCard(c){return `<article class="guide-card" data-family="${c.family}"><img loading="lazy" src="${imageUrl(c)}" alt="${c.ko}"><div><h5>${c.ko} · ${c.en}</h5><p><b>핵심</b> ${c.keywords}</p><p><b>정방향</b> ${upright(c)}</p><p><b>역방향</b> ${reversed(c)}</p><p><b>기억</b> ${memory(c)}</p></div></article>`}
+function renderGuide(filter="All"){const list=filter==="All"?cards:cards.filter(c=>c.family===filter);$("t-guideCards").innerHTML=list.map(guideCard).join("");document.querySelectorAll("#t-module .guide-filter button").forEach(b=>b.classList.toggle("active",b.dataset.f===filter))}
+function buildGuide(){if($("t-guideBody").dataset.ready)return;$("t-guideBody").dataset.ready="1";$("t-guideBody").innerHTML=`<div class="guide-intro"><div class="guide-section"><h4>카드를 읽는 순서</h4><ol><li>그림에서 가장 먼저 눈에 들어오는 인물·색·방향을 본다.</li><li>메이저인지, 마이너라면 수트와 숫자/궁정 계급을 확인한다.</li><li>키워드를 외우기보다 그림 → 수트 → 숫자 → 질문 순서로 의미를 좁힌다.</li><li>역방향은 단순한 반대가 아니라 막힘·과잉·부족·내면화·지연으로 본다.</li></ol></div><div class="guide-section"><h4>4개 수트</h4><p><b>완드 = 불</b> · 행동, 열정, 창조<br><b>컵 = 물</b> · 감정, 관계, 직관<br><b>소드 = 공기</b> · 생각, 말, 판단, 갈등<br><b>펜타클 = 땅</b> · 돈, 일, 몸, 생활</p></div><div class="guide-section"><h4>숫자와 궁정카드</h4><p>에이스 시작 · 2 균형/선택 · 3 확장 · 4 안정 · 5 흔들림 · 6 조정 · 7 시험 · 8 움직임/숙련 · 9 성숙 · 10 완성. 시종은 배우는 자, 기사는 행동하는 자, 여왕은 내면의 숙련, 왕은 외부의 운영으로 잡으면 외우기 쉽다.</p></div><div class="guide-section"><h4>1장과 3장 리딩</h4><p><b>1장</b>은 질문의 핵심 초점 하나를 깊게 읽는다. <b>3장</b>은 먼저 자리의 뜻을 정한다. 예: 과거-현재-미래 / 상황-장애물-조언 / 나-상대-관계. 각 장을 따로 해석한 뒤 ① 같은 수트가 반복되는지 ② 메이저가 어디에 있는지 ③ 숫자가 증가/감소하는지 ④ 인물의 시선과 카드의 분위기가 어디로 흐르는지 연결한다. 마지막에는 세 장을 한 문장으로 요약한다.</p></div></div><div class="guide-filter"><button data-f="All">전체 78</button><button data-f="Major">메이저</button><button data-f="Wands">완드</button><button data-f="Cups">컵</button><button data-f="Swords">소드</button><button data-f="Pentacles">펜타클</button></div><div class="guide-cards" id="t-guideCards"></div>`;document.querySelectorAll("#t-module .guide-filter button").forEach(b=>b.onclick=()=>renderGuide(b.dataset.f));renderGuide()}
+function openGuide(){const back=$("t-guideBack");if(!back)return;try{buildGuide()}catch(err){console.error("Tarot guide error",err);$("t-guideBody").innerHTML=`<div class="guide-section"><h4>가이드북을 불러오지 못했습니다.</h4><p>페이지를 새로고침한 뒤 다시 눌러주세요.</p></div>`}back.classList.add("open");back.style.display="flex";back.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
+function closeGuide(){const back=$("t-guideBack");if(!back)return;back.classList.remove("open");back.style.display="none";back.setAttribute("aria-hidden","true");document.documentElement.style.overflow=""}
+window.openTarotGuide=openGuide;window.closeTarotGuide=closeGuide;const helpBtn=$("t-help"),closeBtn=$("t-guideClose"),guideBack=$("t-guideBack");if(helpBtn)helpBtn.onclick=openGuide;if(closeBtn)closeBtn.onclick=closeGuide;if(guideBack)guideBack.onclick=e=>{if(e.target===guideBack)closeGuide()};document.addEventListener("keydown",e=>{if(e.key==="Escape"&&guideBack&&guideBack.classList.contains("open"))closeGuide()});
+window.randomTarotBridge={exportData:()=>({reversed:!!prefs.reversed}),importData:x=>{prefs.reversed=!!(x&&x.reversed);savePrefs()},resetData:()=>{prefs.reversed=false;savePrefs()}};
 })();
 </script>
+
 </body></html>
